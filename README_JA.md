@@ -1,4 +1,4 @@
-# Template Repository
+# リポジトリテンプレート
 
 [![README in English](https://img.shields.io/badge/English-d9d9d9)](./README.md)
 [![日本語版 README](https://img.shields.io/badge/日本語-d9d9d9)](./README_JA.md)
@@ -11,24 +11,24 @@
 ![SD Robot](img/sd_robot.jpg)
 
 
-## Table of Contents
-1. [**Title A**](#title-a)
-    1. [Sub title A1](#sub-title-a1)
-    2. [Sub title A2](#sub-title-a2)
+## 目次
+1. [**タイトル A**](#タイトル-a)
+    1. [サブタイトル A1](#サブタイトル-a1)
+    2. [サブタイトル A2](#サブタイトル-a2)
 
-2. [**Title B**](#title-b)
-    1. [Sub title B1](#sub-title-b1)
-    2. [Sub title B2](#sub-title-b2)
+2. [**タイトル B**](#タイトル-b)
+    1. [サブタイトル B1](#サブタイトル-b1)
+    2. [サブタイトル B2](#サブタイトル-b2)
 
-3. [**Title C**](#title-c)
-    1. [Sub title C1](#sub-title-c1)
-    2. [Sub title C2](#sub-title-c2)
+3. [**タイトル C**](#タイトル-c)
+    1. [サブタイトル C1](#サブタイトル-c1)
+    2. [サブタイトル C2](#サブタイトル-c2)
 
 
-## Title A
+## タイトル A
 OOOOO.
 
-### Sub title A1
+### サブタイトル A1
 OOOOO.
 
 ```
@@ -48,29 +48,29 @@ $ command
 - [GitHub Flavored Markdown Spec](https://github.github.com/gfm/#introduction)
 - [Markdown記法 チートシート](https://qiita.com/Qiita/items/c686397e4a0f4f11683d)
 
-### Sub title A2
+### サブタイトル A2
 OOOOO.
 
 
-## Title B
+## タイトル B
 OOOOO.
 
-### Sub title B1
+### サブタイトル B1
 OOOOO.
 
-### Sub title B2
+### サブタイトル B2
 OOOOO.
 
 
-## Title C
+## タイトル C
 OOOOO.
 
-### Sub title C1
+### サブタイトル C1
 OOOOO.
 
-### Sub title C2
+### サブタイトル C2
 OOOOO.
 
 ---
 
-[Back to Top](#template-repository)
+[トップに戻る](#リポジトリテンプレート)
