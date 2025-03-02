@@ -18,15 +18,13 @@ class IntBallVelocityController(Node):
             '/joy',  # Joystick messages
             self.joy_callback,
             10)
-        self.subscription  # Prevent unused variable warning
+        self.subscription
 
         # Publishers
         self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
 
-        # Initialize state
         self.z_mode = False  # Flag for z-velocity mode (triangle pressed)
 
-        # Log initialization
         self.get_logger().info("IntBall Velocity Controller Node Initialized")
         
     def joy_callback(self, joy_msg):
@@ -63,10 +61,7 @@ class IntBallVelocityController(Node):
             twist.angular.y = right_stick_x * MAX_ANG_VEL  # Scale angular y
             twist.angular.z = (R2-L2) * MAX_ANG_VEL  # Positive angular z
 
-        # Publish Twist message
         self.publisher.publish(twist)
-
-        # Log Twist output (for debugging)
         self.get_logger().info(
             f"Published Twist: Linear({twist.linear.x}, {twist.linear.y}, {twist.linear.z}) | "
             f"Angular({twist.angular.x}, {twist.angular.y}, {twist.angular.z})"

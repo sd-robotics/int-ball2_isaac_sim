@@ -41,5 +41,4 @@ def generate_launch_description():
         joy_node,
         # intball_vel_joy_node,
         intball_force_joy_node,
-        # intball_feedbacks_joy_node,
     ])

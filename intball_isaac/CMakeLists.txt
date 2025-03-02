@@ -29,8 +29,6 @@ install(DIRECTORY
 install(PROGRAMS
   scripts/direct_force_control.py
   scripts/direct_velocity_control.py
-  # scripts/feedbacks_control.py
-  scripts/write_prim_pose.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
