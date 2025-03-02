@@ -1,0 +1,20 @@
+**__pycache__
+
+# colcon/CMake output
+devel/*
+log/*
+build/*
+install/*
+bin/*
+lib/*
+
+.vscode/*
+!.vscode/extensions.json
+!.vscode/c_cpp_properties.json
+.vscode/settings.json
+
+*.thumbs
+*.swp
+*.zip
+
+assets/*
