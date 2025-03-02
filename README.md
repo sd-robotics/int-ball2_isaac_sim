@@ -3,10 +3,11 @@
 [![README in English](https://img.shields.io/badge/English-d9d9d9)](./README.md)
 [![日本語版 README](https://img.shields.io/badge/日本語-d9d9d9)](./README_JA.md)
 
-![GitHub contributors](https://img.shields.io/github/contributors/SpaceData-Inc/temp_rep)
-![GitHub issues](https://img.shields.io/github/issues/SpaceData-Inc/temp_rep)
-![GitHub fork](https://img.shields.io/github/forks/SpaceData-Inc/temp_rep)
-![GitHub stars](https://img.shields.io/github/stars/SpaceData-Inc/temp_rep)
+![GitHub contributors](https://img.shields.io/github/contributors/sd-robotics/int-ball2_simulator)
+![GitHub issues](https://img.shields.io/github/issues/sd-robotics/int-ball2_simulator)
+![GitHub fork](https://img.shields.io/github/forks/sd-robotics/int-ball2_simulator)
+![GitHub stars](https://img.shields.io/github/stars/sd-robotics/int-ball2_simulator)
+
 [![Ubuntu22.04](https://img.shields.io/badge/Ubuntu-22.04-orange.svg)](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview)
 [![IsaacSim](https://img.shields.io/badge/IsaacSim-4.2.0-green.svg)](https://docs.omniverse.nvidia.com/isaacsim/latest/overview.html)
 [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://docs.python.org/3/whatsnew/3.10.html)
