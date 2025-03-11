@@ -1,4 +1,4 @@
-# Template Repository
+# Int-Ball2 Simulator
 
 [![README in English](https://img.shields.io/badge/English-d9d9d9)](./README.md)
 [![日本語版 README](https://img.shields.io/badge/日本語-d9d9d9)](./README_JA.md)
@@ -20,7 +20,7 @@
 1. [**Installation**](#installation)
     * [Local Installation](#local-installation)
 
-2. [**Usage**](#usage)
+1. [**Usage**](#usage)
     * [Build](#build--source)
     * [Launching Simulation](#launch-the-simulation-by-ros2-launch)
     * [Data Visulisation](#data-visualisation)
@@ -36,8 +36,8 @@
 ### Local Installation
 #### Clone Repository
 ```bash
-# Make a workspace
-mkdir -p intball_ws/src && cd intball_ws/src
+# Make a workspace if you do not have one already
+mkdir -p ~/intball_ws/src
 cd ~/intball_ws/src
 
 # Clone the packages to your workspace
@@ -46,14 +46,27 @@ git clone git@github.com:sd-robotics/int-ball2_simulator.git
 
 #### Install Dependencies
 ```bash
-cd ~/intball_ws/ && sudo apt update
+# Update the list of available packages (Isaac ROS)
+wget -qO - https://isaac.download.nvidia.com/isaac-ros/repos.key | sudo apt-key add -
+grep -qxF "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -cs) release-3.0" /etc/apt/sources.list || \
+echo "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -cs) release-3.0" | sudo tee -a /etc/apt/sources.list
+sudo apt-get update
+
+# Move into the workspace
+cd ~/intball_ws/
+
+# Install the dependencies
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
 #### Download Assets
-Run the following command at the root of the repository to download the assets.
+Run the following command to download the assets.
 ```bash
-./install_local.sh
+# Move into the project
+cd ~/intball_ws/src/int-ball2_simulator
+
+# Download the assets
+bash ./install_local.sh
 ```
 
 ## Usage
@@ -61,7 +74,7 @@ Run the following command at the root of the repository to download the assets.
 ### Build & Source
 
 ```bash
-cd ~/intball_ws/
+cd ~/intball_ws
 colcon build --symlink-install
 source install/setup.bash
 ```
@@ -86,18 +99,12 @@ ros2 launch kibou_isaac kibou_isaacsim.launch.py gui:="~/intball_ws/src/assets/K
 > ```
 
 ### Teleoperation
+Make sure that you have joystick controller connected to the PC before running the command.
 ```bash
 ros2 launch intball_isaac intball_teleop.launch.py 
 ```
 
-[Back to Top](#template-repository)
-
-* Running the teleop control
-> [!NOTE]
-> Make sure that you have joystick controller connected to the PC.
-```bash
-ros2 launch intball_isaac intball_teleop.launch.py 
-```
+[Back to Top](#int-ball2-simulator)
 
 ## Data Visualisation
 #### Rviz
