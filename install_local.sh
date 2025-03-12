@@ -20,7 +20,8 @@ fi
 
 # Download the folder as a ZIP file
 echo "Starting download of assets..."
-gdown 1Ed85xeE_DY5xKWVVTYv7MO9_gokGqZaF -O assets.zip
+# gdown 1Ed85xeE_DY5xKWVVTYv7MO9_gokGqZaF -O assets.zip
+gdown 1gYIv5mAvr3PvDfYAmNGPYsZGznteKcso -O assets.zip
 
 # Check if the download was successful
 if [ ! -f "assets.zip" ]; then
