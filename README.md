@@ -35,7 +35,8 @@
 ## Prerequisites
 In order to use this project, you need to get ready the following environment.
 
-| Package | Versionn |
+| Package | Version |
+| --- | --- |
 | Ubuntu | 22.04 (Jammy Jellyfish) |
 | Isaac Sim | 4.2.0 (September 2024) |
 | ROS | Humble Hawksbill |
