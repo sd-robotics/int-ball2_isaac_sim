@@ -17,7 +17,7 @@
 
 
 ## Table of Contents
-1. [**Prerequisites**]()
+1. [**Prerequisites**](#prerequisites)
 1. [**Installation**](#installation)
     * [Local Installation](#local-installation)
 
