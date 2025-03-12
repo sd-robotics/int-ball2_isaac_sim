@@ -6,7 +6,7 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
 
-    joy_params = os.path.join(get_package_share_directory('intball_isaac'), 'config', 'joystick.yaml')
+    joy_params = os.path.join(get_package_share_directory('int-ball2_isaac'), 'config', 'joystick.yaml')
 
     joy_node = Node(
             package = 'joy',
@@ -15,30 +15,30 @@ def generate_launch_description():
             output = 'screen'
     )
 
-    intball_vel_joy_node = Node(
-            package = 'intball_isaac',
+    intball2_vel_joy_node = Node(
+            package = 'int-ball2_isaac',
             executable = 'direct_velocity_control.py',
-            name = 'intball_velocity_controller_node',
+            name = 'intball2_velocity_controller_node',
             output = 'screen'
     )
     
-    intball_force_joy_node = Node(
-            package = 'intball_isaac',
+    intball2_force_joy_node = Node(
+            package = 'int-ball2_isaac',
             executable = 'direct_force_control.py',
-            name = 'intball_force_controller_node',
+            name = 'intball2_force_controller_node',
             output = 'screen'
     )
     
-#     intball_feedbacks_joy_node = Node(
-#             package = 'intball_isaac',
+#     intball2_feedbacks_joy_node = Node(
+#             package = 'int-ball2_isaac',
 #             executable = 'feedbacks_control.py',
-#             name = 'intball_feedbacks_controller_node',
+#             name = 'intball2_feedbacks_controller_node',
 #             output = 'screen'
 #     )
 
 
     return LaunchDescription([
         joy_node,
-        # intball_vel_joy_node,
-        intball_force_joy_node,
+        # intball2_vel_joy_node,
+        intball2_force_joy_node,
     ])

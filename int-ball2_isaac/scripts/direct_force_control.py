@@ -5,9 +5,9 @@ from rclpy.node import Node
 from sensor_msgs.msg import Joy
 from geometry_msgs.msg import Wrench
 
-class IntBallForceController(Node):
+class IntBall2ForceController(Node):
     def __init__(self):
-        super().__init__("intball_force_controller_node")
+        super().__init__("intball2_force_controller_node")
 
         # Parameters for scaling
         self.force_scale = 1.0   # Adjust force scaling
@@ -24,7 +24,7 @@ class IntBallForceController(Node):
         # Publisher for force/torque
         self.wrench_publisher = self.create_publisher(Wrench, "/ctl/wrench", 10)
 
-        self.get_logger().info("IntBall Force Controller Node Initialized")
+        self.get_logger().info("Int-Ball2 Force Controller Node Initialized")
 
     def joy_callback(self, msg):
         """
@@ -58,7 +58,7 @@ class IntBallForceController(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = IntBallForceController()
+    node = IntBall2ForceController()
     
     try:
         rclpy.spin(node)
