@@ -13,7 +13,7 @@
 [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://docs.python.org/3/whatsnew/3.10.html)
 [![ros2-humble installation](https://img.shields.io/badge/ROS2-Humble-blue.svg)](https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html)
 
-![SD Robot](img/sd_robot.jpg)
+![SD Robot](img/int-ball2_simulator.png)
 
 
 ## Table of Contents
@@ -96,7 +96,7 @@ $ source install/setup.bash
 ### Launch the Simulation by ros2 launch
 
 ```bash
-$ ros2 launch kibou_isaac kibou_isaacsim.launch.py gui:="~/int-ball2_ws/src/assets/KIBOU.usd"
+$ ros2 launch kibou_isaac kibou_isaacsim.launch.py gui:="~/int-ball2_ws/src/int-ball2_simulator/assets/KIBOU.usd"
 ```
 
 > [!TIP]
