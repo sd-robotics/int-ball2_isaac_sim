@@ -100,7 +100,7 @@ $ ros2 launch kibou_isaac kibou_isaacsim.launch.py gui:="~/int-ball2_ws/src/int-
 ```
 
 > [!TIP]
-> If you are using laptop to run IsaacSim and suffering the problem of monitor freezing when IsaacSim is launched, you might want to switch the system to use the NVIDIA GPU by the following command.
+> If you are using laptop to run Isaac Sim and suffering the problem of monitor freezing when Isaac Sim is launched, you might want to switch the system to use the NVIDIA GPU by the following command.
 > ```bash
 > $ sudo prime-select nvidia
 > ```
@@ -111,6 +111,13 @@ $ ros2 launch kibou_isaac kibou_isaacsim.launch.py gui:="~/int-ball2_ws/src/int-
 > ```
 
 ### Teleoperation
+
+Source.
+```bash
+$ cd ~/int-ball2_ws
+$ source install/setup.bash
+```
+
 Make sure that you have joystick controller connected to the PC before running the command.
 ```bash
 $ ros2 launch int-ball2_isaac int-ball2_teleop.launch.py 
