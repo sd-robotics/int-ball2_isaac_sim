@@ -17,6 +17,7 @@
 
 
 ## Table of Contents
+1. [**Prerequisites**]()
 1. [**Installation**](#installation)
     * [Local Installation](#local-installation)
 
@@ -30,6 +31,15 @@
 <!-- #### 参考
 - [GitHub Flavored Markdown Spec](https://github.github.com/gfm/#introduction)
 - [Markdown記法 チートシート](https://qiita.com/Qiita/items/c686397e4a0f4f11683d) -->
+
+## Prerequisites
+In order to use this project, you need to get ready the following environment.
+
+| Package | Versionn |
+| Ubuntu | 22.04 (Jammy Jellyfish) |
+| Isaac Sim | 4.2.0 (September 2024) |
+| ROS | Humble Hawksbill |
+| Python | >=3.10 |
 
 
 ## Installation
