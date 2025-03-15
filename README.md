@@ -13,7 +13,7 @@
 [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://docs.python.org/3/whatsnew/3.10.html)
 [![ros2-humble installation](https://img.shields.io/badge/ROS2-Humble-blue.svg)](https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html)
 
-![Int-Ball2 Isaac Sim](img/int-ball2_isaac_sim.png)
+![Int-Ball2 Isaac Sim 01](img/int-ball2_isaac_sim_01.png)
 
 ## Table of Contents
 1. [**Prerequisites**](#prerequisites)
@@ -30,6 +30,8 @@
     4. [Data Visulisation](#data-visualisation)
 
 4. [**Data Visualisation**](#data-visualisation)
+
+5. [**Acknowledgement**](#acknowledgement)
 
 ---
 
@@ -102,6 +104,12 @@ Launch the simulation by ros2 launch.
 $ ros2 launch int-ball2_isaac_sim int-ball2_isaac_sim.launch.py gui:="~/int-ball2_ws/src/int-ball2_isaac_sim/assets/KIBOU.usd"
 ```
 
+![Int-Ball2 Isaac Sim 02](img/int-ball2_isaac_sim_02.png)
+
+Change of perspective to look around the ISS Kibo (Japanese Experiment Module).
+
+![Int-Ball2 Isaac Sim 02](img/int-ball2_isaac_sim_03.png)
+
 > [!TIP]
 > If you are using laptop to run Isaac Sim and suffering the problem of monitor freezing when Isaac Sim is launched, you might want to switch the system to use the NVIDIA GPU by the following command.
 > ```bash
@@ -129,13 +137,19 @@ $ ros2 launch int-ball2_control int-ball2_teleop.launch.py
 
 Left stick for X-axis and Y-axis translational movement, B button + RT or LT for Z-axis translational movement.
 Right stick for X-axis and Y-axis rotational movement, A button + RT or LT for Z-axis translational movement.
-![Int-Ball2 Isaac Sim](img/int-ball2_teleop.png)
+
+![Int-Ball2 Teleop](img/int-ball2_teleop.png)
 
 ## Data Visualisation
 Launch the Rviz.
 ```bash
 $ ros2 launch int-ball2_control rviz_visualize.launch.py 
 ```
+
+![Int-Ball2 Rviz](img/int-ball2_rviz.png)
+
+## Acknowledgement
+This simulator was developed by Space Data in cooperation with JAXA within the framework of the Space Innovation Partnership (J-SPARC: JAXA Space Innovation through Partnership and Co-creation).
 
 ---
 
