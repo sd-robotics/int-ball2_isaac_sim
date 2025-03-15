@@ -8,33 +8,50 @@
 ![GitHub fork](https://img.shields.io/github/forks/sd-robotics/int-ball2_simulator)
 ![GitHub stars](https://img.shields.io/github/stars/sd-robotics/int-ball2_simulator)
 
-[![Ubuntu22.04](https://img.shields.io/badge/Ubuntu-22.04-orange.svg)](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview)
-[![IsaacSim](https://img.shields.io/badge/IsaacSim-4.2.0-green.svg)](https://docs.omniverse.nvidia.com/isaacsim/latest/overview.html)
-[![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://docs.python.org/3/whatsnew/3.10.html)
-[![ros2-humble installation](https://img.shields.io/badge/ROS2-Humble-blue.svg)](https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html)
+<!--  [![Ubuntu22.04](https://img.shields.io/badge/Ubuntu-22.04-orange.svg)](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview) -->
+<!-- [![IsaacSim](https://img.shields.io/badge/IsaacSim-4.2.0-green.svg)](https://docs.omniverse.nvidia.com/isaacsim/latest/overview.html) -->
+<!-- [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://docs.python.org/3/whatsnew/3.10.html) -->
+<!-- [![ros2-humble installation](https://img.shields.io/badge/ROS2-Humble-blue.svg)](https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html) -->
+
+<p style="display: inline">
+  <img src="https://img.shields.io/badge/-Ubuntu_22.04_LTS-555555.svg?style=flat&logo=ubuntu">  
+  <img src="https://img.shields.io/badge/-Isaac_Sim 4.2.0-76B900.svg?style=flat&logo=nvidia&logoColor=white">
+  <img src="https://img.shields.io/badge/-ROS2 Humble-%2322314E?style=flat&logo=ROS&logoColor=white">
+  <img src="https://img.shields.io/badge/-Python 3.10-3776AB.svg?logo=python&style=flat&logoColor=white">
+  <img src="https://img.shields.io/badge/License-Apache--2.0-60C060.svg?style=flat">
+</p>
 
 ![Int-Ball2 Isaac Sim 01](img/int-ball2_isaac_sim_01.png)
 
 ## Table of Contents
-1. [**Prerequisites**](#prerequisites)
+1. [**What is Int-Ball2 Simulator (Isaac Sim)**](#what-is-int-ball2-simulator-isaac-sim)
 
-2. [**Installation**](#installation)
+2. [**Prerequisites**](#prerequisites)
+
+3. [**Installation**](#installation)
     1. [Clone Repository](#clone-repository)
     2. [Install Dependencies](#install-dependencies)
     3. [Download Assets](#download-assets)
 
-3. [**Usage**](#usage)
+4. [**Usage**](#usage)
     1. [Build & Source](#build--source)
     2. [Launch the Simulation](#launch-the-simulation)
     3. [How to control Int-Ball2](#how-to-control-int-ball2)
     4. [Teleoperation (Joy Controller)](#teleoperation-joy-controller)
     5. [Data Visulisation](#data-visualisation)
 
-4. [**Data Visualisation**](#data-visualisation)
+5. [**Data Visualisation**](#data-visualisation)
 
-5. [**Acknowledgement**](#acknowledgement)
+6. [**Acknowledgement**](#acknowledgement)
 
 ---
+
+## What is Int-Ball2 Simulator (Isaac Sim)
+Int-Ball2 is a free-flying camera robot deployed in the ISS Japan Experimental Module (JEM). It is remotely controlled from the ground to capture video images and support astronauts. Additionally, Int-Ball2 can run user-developed software as an extended functionality and can be used as a platform for demonstrating robotic technology in space.
+
+This Repository provides a ROS + Isaac Sim (NVIDIA) based simulator for Int-Ball2. It simulates Int-Ball2's behavior in the ISS/JEM environment with user-developed programs.
+
+![Int-Ball2 Hardware](img/int-ball2_hardware.png)
 
 ## Prerequisites
 In order to use this project, you need to get ready the following environment.
@@ -173,6 +190,10 @@ ros2 launch int-ball2_control rviz_visualize.launch.py
 
 ## Acknowledgement
 This simulator was developed by Space Data in cooperation with JAXA within the framework of the Space Innovation Partnership (J-SPARC: JAXA Space Innovation through Partnership and Co-creation).
+
+> [!TIP]
+> This document includes content from JAXA's Int-Ball2 Simulator, which is licensed under the Apache License 2.0.
+> - [Int-Ball2 Simulator (Gazebo)](https://github.com/jaxa/int-ball2_simulator)
 
 ---
 
