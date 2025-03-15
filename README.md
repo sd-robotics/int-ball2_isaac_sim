@@ -13,7 +13,7 @@
 [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://docs.python.org/3/whatsnew/3.10.html)
 [![ros2-humble installation](https://img.shields.io/badge/ROS2-Humble-blue.svg)](https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html)
 
-![SD Robot](img/int-ball2_simulator.png)
+![SD Robot](img/int-ball2_isaac_sim.png)
 
 
 ## Table of Contents
@@ -50,7 +50,7 @@ $ cd ~/int-ball2_ws/src
 
 Clone the packages to your workspace.
 ```bash
-$ git clone https://github.com/sd-robotics/int-ball2_simulator.git
+$ git clone https://github.com/sd-robotics/int-ball2_isaac_sim.git
 ```
 
 #### Install Dependencies
@@ -76,7 +76,7 @@ $ rosdep install --from-paths src --ignore-src -r -y
 Run the following command to download the assets.
 Move into the project.
 ```bash
-$ cd ~/int-ball2_ws/src/int-ball2_simulator
+$ cd ~/int-ball2_ws/src/int-ball2_isaac_sim
 ```
 
 Download the assets.
@@ -96,7 +96,7 @@ $ source install/setup.bash
 ### Launch the Simulation by ros2 launch
 
 ```bash
-$ ros2 launch kibou_isaac kibou_isaacsim.launch.py gui:="~/int-ball2_ws/src/int-ball2_simulator/assets/KIBOU.usd"
+$ ros2 launch int-ball2_isaac_sim int-ball2_isaac_sim.launch.py gui:="~/int-ball2_ws/src/int-ball2_isaac_sim/assets/KIBOU.usd"
 ```
 
 > [!TIP]
@@ -120,22 +120,14 @@ $ source install/setup.bash
 
 Make sure that you have joystick controller connected to the PC before running the command.
 ```bash
-$ ros2 launch int-ball2_isaac int-ball2_teleop.launch.py 
+$ ros2 launch int-ball2_control int-ball2_teleop.launch.py
 ```
 
 ## Data Visualisation
 #### Rviz
 ```bash
-$ ros2 launch robot_vistool rviz_visualize.launch.py 
+$ ros2 launch int-ball2_control rviz_visualize.launch.py 
 ```
-
-#### Foxglove Studio
-```bash
-$ ros2 launch robot_vistool foxglove_visualize.launch.py 
-```
-> [!TIP]
-> If you don't have Foxglove studio, check [Foxglove installation](https://docs.foxglove.dev/docs/foxglove-agent/installation) adn [ROS2 bridge](https://docs.foxglove.dev/docs/connecting-to-data/frameworks/ros2)
-> You can find the example layout inside `robot_vistool/foxglove/Int-Ball2.json`
 
 ---
 
