@@ -122,6 +122,9 @@ Launch the simulation by ros2 launch.
 ros2 launch int-ball2_isaac_sim int-ball2_isaac_sim.launch.py gui:="~/int-ball2_ws/src/int-ball2_isaac_sim/assets/KIBOU.usd"
 ```
 
+The Isaac Sim simulation is run by pressing the “▶” button on the left side of the screen.
+The ROS programs such as sensors and propulsion systems in Isaac Sim will then run.
+
 ![Int-Ball2 Isaac Sim 02](img/int-ball2_isaac_sim_02.png)
 
 Change of perspective to look around the ISS Kibo (Japanese Experiment Module).
