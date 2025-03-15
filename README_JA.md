@@ -122,6 +122,9 @@ ros2 launchでシミュレーションを起動します。
 ros2 launch int-ball2_isaac_sim int-ball2_isaac_sim.launch.py gui:="~/int-ball2_ws/src/int-ball2_isaac_sim/assets/KIBOU.usd"
 ```
 
+画面左側にある「▶」ボタンを押すことでIsaac Simのシミュレーションが実行されます。
+その後、Isaac Sim内のセンサや推進装置といったROSプログラムが動きます。
+
 ![Int-Ball2 Isaac Sim 02](img/int-ball2_isaac_sim_02.png)
 
 視点を変えることで、ISS「きぼう」日本実験棟を見渡すことができます。
