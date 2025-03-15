@@ -21,6 +21,7 @@ endif()
 
 install(DIRECTORY
   config
+  rviz
   launch
   scripts
   DESTINATION share/${PROJECT_NAME})
