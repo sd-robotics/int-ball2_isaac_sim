@@ -8,9 +8,9 @@ from sensor_msgs.msg import Joy
 
 MAX_LIN_VEL = 0.5 # m/sec
 MAX_ANG_VEL = 20.0 # deg/sec
-class IntBallVelocityController(Node):
+class IntBall2VelocityController(Node):
     def __init__(self):
-        super().__init__('intball_velocity_controller_node')
+        super().__init__('intball2_velocity_controller_node')
 
         # Subscriptions
         self.subscription = self.create_subscription(
@@ -25,7 +25,7 @@ class IntBallVelocityController(Node):
 
         self.z_mode = False  # Flag for z-velocity mode (triangle pressed)
 
-        self.get_logger().info("IntBall Velocity Controller Node Initialized")
+        self.get_logger().info("Int-Ball2 Velocity Controller Node Initialized")
         
     def joy_callback(self, joy_msg):
         """
@@ -70,7 +70,7 @@ class IntBallVelocityController(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = IntBallVelocityController()
+    node = IntBall2VelocityController()
 
     try:
         rclpy.spin(node)
