@@ -134,13 +134,13 @@ Change of perspective to look around the ISS Kibo (Japanese Experiment Module).
 > sudo prime-select nvidia
 > ```
 >
-> This will result in a better performance in graphic-intensive tasks. To check if your laptop has successfully switched to NVIDIA GPU, you can use the command
+> This will result in a better performance in graphic-intensive tasks. To check if your laptop has successfully switched to NVIDIA GPU, you can use the command.
 > ```bash
 > prime-select query
 > ```
 
 ### How to control Int-Ball2
-Data obtainable by user program.
+The following data can be obtained by the user program.
 
 | Type  |    ROS Definition Name    |                                      Overview                                         |
 | ----- | ------------------------- | ------------------------------------------------------------------------------------- | 
@@ -153,34 +153,38 @@ Data obtainable by user program.
 | Topic | /imu/imu                  | Sensor value of the IMU(Inertial Measurement Unit).                                   |
 | Topic | /ground_truth             | True value of the robot position and orientation (docking station to Int-Ball2 body). |
 
-
-Data controllable by user program.
+The following data can be controlled by the user program.
 
 | Type  |    ROS Definition Name    |                                            Overview                                             |
 | ----- | ------------------------- | ----------------------------------------------------------------------------------------------- | 
 | Topic | /ctl/wrench               | Input values of the Force and Torque to Int-Ball2. Int-Ball2 is controlled by Force and Torque. |
 
-
 ### Teleoperation (Joy Controller)
-Build and Setup the package.
-Source.
+Setup the package.
 ```bash
 cd ~/int-ball2_ws
 source install/setup.bash
 ```
 
 Make sure that you have joystick controller connected to the PC before running the command.
-Then Launch the teleop.
+Then Launch the teleop (operated by joystick controller).
 ```bash
 ros2 launch int-ball2_control int-ball2_teleop.launch.py
 ```
 
+Operation with the joystick controller is as follows.
 Left stick for X-axis and Y-axis translational movement, B button + RT or LT for Z-axis translational movement.
 Right stick for X-axis and Y-axis rotational movement, A button + RT or LT for Z-axis translational movement.
 
 ![Int-Ball2 Teleop](img/int-ball2_teleop.png)
 
 ## Data Visualisation
+Setup the package.
+```bash
+cd ~/int-ball2_ws
+source install/setup.bash
+```
+
 Launch the Rviz.
 ```bash
 ros2 launch int-ball2_control rviz_visualize.launch.py 
