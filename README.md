@@ -1,4 +1,4 @@
-# Int-Ball2 Simulator
+# Int-Ball2 Simulator (Isaac Sim)
 
 [![README in English](https://img.shields.io/badge/English-d9d9d9)](./README.md)
 [![日本語版 README](https://img.shields.io/badge/日本語-d9d9d9)](./README_JA.md)
@@ -13,18 +13,23 @@
 [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://docs.python.org/3/whatsnew/3.10.html)
 [![ros2-humble installation](https://img.shields.io/badge/ROS2-Humble-blue.svg)](https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html)
 
-![SD Robot](img/int-ball2_isaac_sim.png)
-
+![Int-Ball2 Isaac Sim](img/int-ball2_isaac_sim.png)
 
 ## Table of Contents
 1. [**Prerequisites**](#prerequisites)
-1. [**Installation**](#installation)
-    * [Local Installation](#local-installation)
 
-1. [**Usage**](#usage)
-    * [Build](#build--source)
-    * [Launching Simulation](#launch-the-simulation-by-ros2-launch)
-    * [Data Visulisation](#data-visualisation)
+2. [**Installation**](#installation)
+    1. [Clone Repository](#clone-repository)
+    2. [Install Dependencies](#install-dependencies)
+    3. [Download Assets](#download-assets)
+
+3. [**Usage**](#usage)
+    1. [Build & Source](#build--source)
+    2. [Launch the Simulation](#launch-the-simulation)
+    3. [Teleoperation (Joy Controller)](#teleoperation-joy-controller)
+    4. [Data Visulisation](#data-visualisation)
+
+4. [**Data Visualisation**](#data-visualisation)
 
 ---
 
@@ -38,10 +43,8 @@ In order to use this project, you need to get ready the following environment.
 |    ROS    |     Humble Hawksbill    |
 |   Python  |          3.10 <=        |
 
-
 ## Installation
-### Local Installation
-#### Clone Repository
+### Clone Repository
 Make a workspace if you do not have one already.
 ```bash
 $ mkdir -p ~/int-ball2_ws/src
@@ -53,8 +56,8 @@ Clone the packages to your workspace.
 $ git clone https://github.com/sd-robotics/int-ball2_isaac_sim.git
 ```
 
-#### Install Dependencies
-Update the list of available packages (Isaac ROS)
+### Install Dependencies
+Update the list of available packages (Isaac ROS).
 ```bash
 $ wget -qO - https://isaac.download.nvidia.com/isaac-ros/repos.key | sudo apt-key add -
 $ grep -qxF "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -cs) release-3.0" /etc/apt/sources.list || \
@@ -72,7 +75,7 @@ Install the dependencies.
 $ rosdep install --from-paths src --ignore-src -r -y
 ```
 
-#### Download Assets
+### Download Assets
 Run the following command to download the assets.
 Move into the project.
 ```bash
@@ -86,15 +89,15 @@ $ bash install_local.sh
 
 ## Usage
 ### Build & Source
-
+Build and Setup the package.
 ```bash
 $ cd ~/int-ball2_ws
 $ colcon build --symlink-install
 $ source install/setup.bash
 ```
 
-### Launch the Simulation by ros2 launch
-
+### Launch the Simulation
+Launch the simulation by ros2 launch.
 ```bash
 $ ros2 launch int-ball2_isaac_sim int-ball2_isaac_sim.launch.py gui:="~/int-ball2_ws/src/int-ball2_isaac_sim/assets/KIBOU.usd"
 ```
@@ -110,8 +113,8 @@ $ ros2 launch int-ball2_isaac_sim int-ball2_isaac_sim.launch.py gui:="~/int-ball
 > $ prime-select query
 > ```
 
-### Teleoperation
-
+### Teleoperation (Joy Controller)
+Build and Setup the package.
 Source.
 ```bash
 $ cd ~/int-ball2_ws
@@ -119,12 +122,17 @@ $ source install/setup.bash
 ```
 
 Make sure that you have joystick controller connected to the PC before running the command.
+Then Launch the teleop.
 ```bash
 $ ros2 launch int-ball2_control int-ball2_teleop.launch.py
 ```
 
+Left stick for X-axis and Y-axis translational movement, B button + RT or LT for Z-axis translational movement.
+Right stick for X-axis and Y-axis rotational movement, A button + RT or LT for Z-axis translational movement.
+![Int-Ball2 Isaac Sim](img/int-ball2_teleop.png)
+
 ## Data Visualisation
-#### Rviz
+Launch the Rviz.
 ```bash
 $ ros2 launch int-ball2_control rviz_visualize.launch.py 
 ```
