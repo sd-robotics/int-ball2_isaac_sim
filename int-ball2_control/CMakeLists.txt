@@ -24,6 +24,7 @@ install(DIRECTORY
   rviz
   launch
   scripts
+  description
   DESTINATION share/${PROJECT_NAME})
 
 # Install Python executables

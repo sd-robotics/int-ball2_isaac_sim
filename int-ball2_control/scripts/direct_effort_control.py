@@ -11,7 +11,7 @@ class IntBall2ForceController(Node):
 
         # Parameters for scaling
         self.force_scale  = 1.0   # Adjust force scaling
-        self.torque_scale = 0.1   # Adjust torque scaling
+        self.torque_scale = 1.0   # Adjust torque scaling
         
         # Subscriber to the Joy topic
         self.subscription = self.create_subscription(
@@ -37,8 +37,8 @@ class IntBall2ForceController(Node):
         wrench.force.y = -msg.axes[0] * self.force_scale    # Left stick Y
 
         # Right stick controls rotation (torque) in X and Y
-        wrench.torque.x = msg.axes[4] * self.torque_scale   # Right stick X
-        wrench.torque.y = msg.axes[3] * self.torque_scale   # Right stick Y
+        wrench.torque.x =  msg.axes[4] * self.torque_scale  # Right stick X
+        wrench.torque.y = -msg.axes[3] * self.torque_scale  # Right stick Y
 
         # L2 (Axis 2) and R2 (Axis 5) control force in Z
         L2 = (1 - msg.axes[2]) / 2  # Convert from [-1, 1] to [0, 1]

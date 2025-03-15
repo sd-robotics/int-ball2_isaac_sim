@@ -36,8 +36,8 @@ class IntBall2VelocityController(Node):
         twist.linear.y = -msg.axes[0] * self.MAX_LIN_VEL   # Left stick Y
 
        # Right stick controls angular velocity in X and Y
-        twist.angular.x = msg.axes[4] * self.MAX_ANG_VEL   # Right stick X
-        twist.angular.y = msg.axes[3] * self.MAX_ANG_VEL   # Right stick Y
+        twist.angular.x =  msg.axes[4] * self.MAX_ANG_VEL  # Right stick X
+        twist.angular.y = -msg.axes[3] * self.MAX_ANG_VEL  # Right stick Y
 
         # L2 (Axis 2) and R2 (Axis 5) control force in Z
         L2 = (1 - msg.axes[2]) / 2  # Convert from [-1, 1] to [0, 1]

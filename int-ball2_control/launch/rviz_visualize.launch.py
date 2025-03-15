@@ -8,12 +8,24 @@ from launch_ros.actions import Node
 from launch.conditions import IfCondition
 import xacro
 
-# this is the function launch  system will look for
+from launch_ros.actions import Node
+
 def generate_launch_description():
 
     ####### DATA INPUT ##########
-    # urdf_file = 'moonbotX.urdf'
-    package_description = "robot_vistool"
+    package_description = "int-ball2_control"
+
+    # URDF Configuration
+    urdf_file_path = os.path.join(
+        get_package_share_directory(package_description),
+        'description',
+        'ib2.urdf'
+    )
+    print(f"URDF file path: {urdf_file_path}")
+    with open(urdf_file_path, 'r') as urdf_file:
+        robot_description_content = urdf_file.read()
+
+    robot_description = {'robot_description': robot_description_content}
 
     # RVIZ Configuration
     rviz_config_dir = os.path.join(
@@ -22,19 +34,31 @@ def generate_launch_description():
         'int-ball2_vis.rviz'
     )
 
+    # Add robot_state_publisher node
+    robot_state_publisher_node = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        output='screen',
+        parameters=[robot_description]
+    )
+
+    # Add RViz node
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',
         output='screen',
         name='rviz',
-        parameters=[{'use_sim_time': True}],
+        parameters=[
+            {'use_sim_time': True},
+            robot_description
+        ],
         arguments=['-d', rviz_config_dir]
     )
 
-
     # create and return launch description object
     return LaunchDescription(
-        [           
+        [
+            robot_state_publisher_node,  # Add this node
             rviz_node,
         ]
     )
