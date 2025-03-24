@@ -6,7 +6,6 @@ from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
     main_args = [
-        DeclareLaunchArgument('version', default_value='4.2.0', description='Isaac Sim version'),
         DeclareLaunchArgument('isaac_path', default_value='', description='Isaac Sim installation root folder if not default'),
         DeclareLaunchArgument('usd_file',
             default_value=PathJoinSubstitution([
@@ -26,11 +25,9 @@ def generate_launch_description():
     isaacsim_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(isaacsim_launch_file),
         launch_arguments={
-            'version': LaunchConfiguration('version'),
             'install_path': LaunchConfiguration('isaac_path'),
             'gui': LaunchConfiguration('usd_file'),
             'play_sim_on_start': LaunchConfiguration('play_on_start'),
-            'headless': 'native',
         }.items()
     )
 
