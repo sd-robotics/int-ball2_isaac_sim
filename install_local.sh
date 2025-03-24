@@ -38,6 +38,13 @@ echo "Download complete!"
 
 cd $CRT_DIR
 
+# Install Isaac Sim dependencies
+wget -qO - https://isaac.download.nvidia.com/isaac-ros/repos.key | sudo apt-key add -
+grep -qxF "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -cs) release-3.0" /etc/apt/sources.list || \
+echo "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -cs) release-3.0" | sudo tee -a /etc/apt/sources.list
+sudo apt-get update
+sudo apt-get install -y ros-humble-isaac-ros-nitros
+
 # Setup Isaac Sim launcher repository
 CRT_DIR=$(pwd)
 cd ..
@@ -48,8 +55,7 @@ cd IsaacSim-ros_workspaces
 git remote add origin https://github.com/isaac-sim/IsaacSim-ros_workspaces.git
 git config core.sparseCheckout true
 git sparse-checkout set humble_ws/src/isaacsim
-git pull origin main
-git checkout IsaacSim-4.2.0
+git pull origin IsaacSim-4.2.0
 
 cd $CRT_DIR
 
