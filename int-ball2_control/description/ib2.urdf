@@ -1,4 +1,9 @@
 <?xml version="1.0"?>
+
+<!-- Copyright 2025 Japan Aerospace Exploration Agency (JAXA)
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. -->
+
 <robot name="ib2">
 
   <link name="base"/>
@@ -6,13 +11,13 @@
   <link name="body">
     <visual>
       <geometry>
-        <mesh filename="package://int-ball2_control/description/media/meshes/int-ball2/Int-Ball2_20241105_v2.dae" />
+        <mesh filename="package://int-ball2_control/description/media/meshes/int-ball2/int-ball2.dae" />
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0" />
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://int-ball2_control/description/media/meshes/int-ball2/Int-Ball2_20241105_v2.dae" />
+        <mesh filename="package://int-ball2_control/description/media/meshes/int-ball2/int-ball2.dae" />
       </geometry>
     </collision>
     <inertial>
@@ -50,12 +55,12 @@
     <origin xyz=" 0.0 0.0 0.0 " rpy="0 0 0"/>
   </joint>
 
-  <gazebo>
+  <!-- <gazebo>
     <plugin name="thr"  filename="libthr.so"  />
-  </gazebo>
+  </gazebo> -->
 
   <link name="imu_link"/>
-  <gazebo reference="imu_link">
+  <!-- <gazebo reference="imu_link">
     <gravity>true</gravity>
     <sensor name="imu_sensor" type="imu">
       <always_on>true</always_on>
@@ -74,10 +79,10 @@
       </plugin>
       <pose>0 0 0 0 0 0</pose>
     </sensor>
-  </gazebo>
+  </gazebo> -->
 
   <link name="cameraF_link"/>
-  <gazebo reference="cameraF_link">
+  <!-- <gazebo reference="cameraF_link">
     <sensor type="camera" name="cameraF">
       <update_rate>30.0</update_rate>
       <camera name="head">
@@ -112,10 +117,10 @@
         <distortionT2>0.0</distortionT2>
       </plugin>
     </sensor>
-  </gazebo>
+  </gazebo> -->
 
   <link name="cameraL_link"/>
-  <gazebo reference="cameraL_link">
+  <!-- <gazebo reference="cameraL_link">
     <sensor type="camera" name="cameraL">
       <update_rate>30.0</update_rate>
       <camera name="head">
@@ -150,10 +155,10 @@
         <distortionT2>0.0</distortionT2>
       </plugin>
     </sensor>
-  </gazebo>
+  </gazebo> -->
 
   <link name="cameraR_link"/>
-  <gazebo reference="cameraR_link">
+  <!-- <gazebo reference="cameraR_link">
     <sensor type="camera" name="cameraR">
       <update_rate>30.0</update_rate>
       <camera name="head">
@@ -197,6 +202,6 @@
       <topicName>/ib2_tracker</topicName>
       <updateRate>50.0</updateRate>
     </plugin>
-  </gazebo>
+  </gazebo> -->
 
 </robot>

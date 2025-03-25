@@ -3,10 +3,10 @@
 [![README in English](https://img.shields.io/badge/English-d9d9d9)](./README.md)
 [![日本語版 README](https://img.shields.io/badge/日本語-d9d9d9)](./README_JA.md)
 
-![GitHub contributors](https://img.shields.io/github/contributors/sd-robotics/int-ball2_simulator)
-![GitHub issues](https://img.shields.io/github/issues/sd-robotics/int-ball2_simulator)
-![GitHub fork](https://img.shields.io/github/forks/sd-robotics/int-ball2_simulator)
-![GitHub stars](https://img.shields.io/github/stars/sd-robotics/int-ball2_simulator)
+![GitHub contributors](https://img.shields.io/github/contributors/sd-robotics/int-ball2_isaac_sim)
+![GitHub issues](https://img.shields.io/github/issues/sd-robotics/int-ball2_isaac_sim)
+![GitHub fork](https://img.shields.io/github/forks/sd-robotics/int-ball2_isaac_sim)
+![GitHub stars](https://img.shields.io/github/stars/sd-robotics/int-ball2_isaac_sim)
 
 <!--  [![Ubuntu22.04](https://img.shields.io/badge/Ubuntu-22.04-orange.svg)](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview) -->
 <!-- [![IsaacSim](https://img.shields.io/badge/IsaacSim-4.2.0-green.svg)](https://docs.omniverse.nvidia.com/isaacsim/latest/overview.html) -->
@@ -35,10 +35,9 @@
 
 4. [**使い方**](#使い方)
     1. [ビルド & ソース](#ビルド--ソース)
-    2. [シミュレーションの起動](#シミュレーションの起動)
-    3. [Int-Ball2の制御方法](#Int-Ball2の制御方法)
+    2. [シミュレータの起動方法](#シミュレータの起動方法)
+    3. [ROS Bridgeによるデータ取得](#ros-bridgeによるデータ取得)
     4. [遠隔操作 (ジョイコントローラ)](#遠隔操作-ジョイコントローラ)
-    5. [Data Visulisation](#data-visualisation)
 
 5. [**データの可視化**](#データの可視化)
 
@@ -47,9 +46,13 @@
 ---
 
 ## Int-Ball2シミュレータ (Isaac Sim) とは？
-Int-Ball2は、ISSの日本実験棟 (JEM) に配備されたフリーフライング型のカメラロボットです。地上からの遠隔操作で動画像の撮影を行い、宇宙飛行士をサポートします。さらに、Int-Ball2は、拡張機能としてユーザーが開発したソフトウェアを実行することができ、宇宙でのロボット技術を実証するためのプラットフォームとして使用することができます。
+Int-Ball2は、ISSの日本実験棟 (JEM) に配備されたフリーフライング型のカメラロボットです。
+地上からの遠隔操作で動画像の撮影を行い、宇宙飛行士をサポートします。
+さらに、Int-Ball2は、拡張機能としてユーザーが開発したソフトウェアを実行することができ、
+宇宙でのロボット技術を実証するためのプラットフォームとして使用することができます。
 
-このリポジトリでは、Int-Ball2用のROS + Isaac Sim (NVIDIA) ベースのシミュレータを提供します。ISS/JEM環境におけるInt-Ball2の挙動を、ユーザー開発プログラムでシミュレーションすることができます。
+このリポジトリでは、Int-Ball2用のROS + Isaac Sim (NVIDIA) ベースのシミュレータを提供します。
+ISS/JEM環境におけるInt-Ball2の挙動を、ユーザー開発プログラムでシミュレーションすることができます。
 
 ![Int-Ball2 Hardware](img/int-ball2_hardware.png)
 
@@ -77,14 +80,6 @@ git clone https://github.com/sd-robotics/int-ball2_isaac_sim.git
 ```
 
 ### 依存関係のインストール
-利用可能なパッケージを更新します (Isaac ROS)。
-```bash
-wget -qO - https://isaac.download.nvidia.com/isaac-ros/repos.key | sudo apt-key add -
-grep -qxF "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -cs) release-3.0" /etc/apt/sources.list || \
-echo "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -cs) release-3.0" | sudo tee -a /etc/apt/sources.list
-sudo apt-get update
-```
-
 ワークスペースまで移動します。
 ```bash
 cd ~/int-ball2_ws/
@@ -96,31 +91,33 @@ rosdep install --from-paths src --ignore-src -r -y
 ```
 
 ### アセットのダウンロード
-以下のコマンドを実行し、アセットをダウンロードします。
 プロジェクトまで移動します。
 ```bash
 cd ~/int-ball2_ws/src/int-ball2_isaac_sim
 ```
 
-アセットをダウンロードします。
+アセットをダウンロードします（Int-Ball2、JEM等）。
 ```bash
 bash install_local.sh
 ```
 
 ## 使い方
 ### ビルド & ソース
-パッケージのビルドとセットアップを行います。
+パッケージのビルドとワークスペースのソースを行います。
 ```bash
 cd ~/int-ball2_ws
 colcon build --symlink-install
 source install/setup.bash
 ```
 
-### シミュレーションの起動
-ros2 launchでシミュレーションを起動します。
+### シミュレータの起動方法
+ros2 launchでシミュレータを起動します。
 ```bash
 ros2 launch int-ball2_isaac_sim int-ball2_isaac_sim.launch.py gui:="~/int-ball2_ws/src/int-ball2_isaac_sim/assets/KIBOU.usd"
 ```
+
+> [!NOTE]
+> `ROS_DOMAIN_ID`が事前にセットアップされていない場合、デフォルトIDが`0`となります。
 
 画面左側にある「▶」ボタンを押すことでIsaac Simのシミュレーションが実行されます。
 その後、Isaac Sim内のセンサや推進装置といったROSプログラムが動きます。
@@ -142,7 +139,7 @@ ros2 launch int-ball2_isaac_sim int-ball2_isaac_sim.launch.py gui:="~/int-ball2_
 > prime-select query
 > ```
 
-### Int-Ball2の制御方法
+### ROS Bridgeによるデータ取得
 ユーザープログラムによって取得可能なデータは下記の通りです。
 
 | 種類  |         ROS定義名          |                                 概要                               |
@@ -163,7 +160,7 @@ ros2 launch int-ball2_isaac_sim int-ball2_isaac_sim.launch.py gui:="~/int-ball2_
 | Topic | /ctl/wrench               | Int-Ball2 に力とトルクを入力する。Int-Ball2はForceとTorqueによって制御される。 |
 
 ### 遠隔操作 (ジョイコントローラ)
-パッケージのセットアップを行います。
+ワークスペースをソースします。
 ```bash
 cd ~/int-ball2_ws
 source install/setup.bash
@@ -176,13 +173,19 @@ ros2 launch int-ball2_control int-ball2_teleop.launch.py
 ```
 
 ジョイスティック・コントローラでの操作は下記のとおりです。
-左スティックでX軸とY軸の並進移動、Bボタン＋RTまたはLTでZ軸の並進移動。
-右スティックでX軸とY軸の回転移動、Aボタン＋RTまたはLTでZ軸の並進移動。
+
+並進移動の場合：
+- X軸とY軸：左スティックで、
+- Z軸：Bボタン＋RTまたはLT。
+
+回転移動：
+- X軸とY軸：右スティックで、
+- Z軸：Aボタン＋RTまたはLT。
 
 ![Int-Ball2 Teleop](img/int-ball2_teleop.png)
 
 ## データの可視化
-パッケージのセットアップを行います。
+ワークスペースをソースします。
 ```bash
 cd ~/int-ball2_ws
 source install/setup.bash
@@ -196,7 +199,7 @@ ros2 launch int-ball2_control rviz_visualize.launch.py
 ![Int-Ball2 Rviz](img/int-ball2_rviz.png)
 
 ## 謝辞
-このシミュレータは、宇宙イノベーションパートナーシップ（J-SPARC：JAXA Space Innovation through Partnership and Co-creation）の枠組みの中で、スペースデータがJAXAと協力して開発したものです。
+このシミュレータは、宇宙イノベーションパートナーシップ（J-SPARC：JAXA Space Innovation through Partnership and Co-creation）の枠組みの中で、株式会社スペースデータがJAXAと協力して開発したものです。
 
 > [!TIP]
 > この文書は、Apache License 2.0の下でライセンスされているJAXAのInt-Ball2シミュレータの内容を含んでいます。
