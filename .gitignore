@@ -17,4 +17,4 @@ lib/*
 *.swp
 *.zip
 
-assets/*
+int-ball2_isaac_sim/assets

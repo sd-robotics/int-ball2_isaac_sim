@@ -79,14 +79,6 @@ git clone https://github.com/sd-robotics/int-ball2_isaac_sim.git
 ```
 
 ### Install Dependencies
-Update the list of available packages (mainly Isaac ROS-related packages).
-```bash
-wget -qO - https://isaac.download.nvidia.com/isaac-ros/repos.key | sudo apt-key add -
-grep -qxF "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -cs) release-3.0" /etc/apt/sources.list || \
-echo "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -cs) release-3.0" | sudo tee -a /etc/apt/sources.list
-sudo apt-get update
-```
-
 Move into your workspace.
 ```bash
 cd ~/int-ball2_ws/

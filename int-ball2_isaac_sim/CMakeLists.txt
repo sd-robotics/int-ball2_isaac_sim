@@ -7,9 +7,7 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(isaac_ros_nitros REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -24,15 +22,9 @@ if(BUILD_TESTING)
 endif()
 
 install(DIRECTORY
-  scripts
   launch
+  assets
   DESTINATION share/${PROJECT_NAME})
 
-# Install Python executables
-install(PROGRAMS
-  scripts/run_isaac_sim.py
-  scripts/open_isaac_sim_stage.py
-  DESTINATION lib/${PROJECT_NAME}
-)
 
 ament_package()
