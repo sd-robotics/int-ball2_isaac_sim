@@ -198,6 +198,12 @@ ros2 launch int-ball2_control rviz_visualize.launch.py
 
 ![Int-Ball2 Rviz](img/int-ball2_rviz.png)
 
+## 引用
+本プラットフォームを研究に使用する場合は、以下のように引用してください。
+```
+[1] SpaceData Inc., 2025, int-ball2_isaac_sim (Version v1.0.0) [Source code], GitHub, Available at: https://github.com/sd-robotics/int-ball2_isaac_sim.
+```
+
 ## 謝辞
 このシミュレータは、宇宙イノベーションパートナーシップ（J-SPARC：JAXA Space Innovation through Partnership and Co-creation）の枠組みの中で、株式会社スペースデータがJAXAと協力して開発したものです。
 
