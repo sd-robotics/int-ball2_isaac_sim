@@ -10,7 +10,7 @@ class IntBall2VelocityController(Node):
         super().__init__('ib2_vel_ctrl')
 
         # Parameters for scaling
-        self.MAX_LIN_VEL = 0.5  # m/sec
+        self.MAX_LIN_VEL = 10.0  # m/sec
         self.MAX_ANG_VEL = 20.0 # deg/sec
 
         # Subscriptions
@@ -25,7 +25,7 @@ class IntBall2VelocityController(Node):
 
         self.get_logger().info("Int-Ball2 Velocity Controller Node Initialized")
         
-    def joy_callback(self, joy_msg):
+    def joy_callback(self, msg):
         """
         Callback for handling joystick inputs and mapping them to Twist messages.
         """
