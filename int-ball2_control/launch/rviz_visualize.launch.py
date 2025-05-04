@@ -16,16 +16,25 @@ def generate_launch_description():
     package_description = "int-ball2_control"
 
     # URDF Configuration
-    urdf_file_path = os.path.join(
+    ib2_urdf = os.path.join(
         get_package_share_directory(package_description),
         'description',
         'ib2.urdf'
     )
-    print(f"URDF file path: {urdf_file_path}")
-    with open(urdf_file_path, 'r') as urdf_file:
-        robot_description_content = urdf_file.read()
+    iss_urdf = os.path.join(
+        get_package_share_directory(package_description),
+        'description',
+        'kibou.urdf'
+    )
 
-    robot_description = {'robot_description': robot_description_content}
+    with open(ib2_urdf, 'r') as urdf_file:
+        ib2_description_content = urdf_file.read()
+
+    with open(iss_urdf, 'r') as urdf_file:
+        iss_description_content = urdf_file.read()
+
+    ib2_description = {'robot_description': ib2_description_content}
+    iss_description = {'robot_description': iss_description_content}
 
     # RVIZ Configuration
     rviz_config_dir = os.path.join(
@@ -35,11 +44,22 @@ def generate_launch_description():
     )
 
     # Add robot_state_publisher node
-    robot_state_publisher_node = Node(
+    ib2_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
+        name="ib2_state_publisher",
         output='screen',
-        parameters=[robot_description]
+        parameters=[ib2_description],
+        remappings=[("robot_description", "ib2_description")]
+    )
+
+    iss_state_publisher_node = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        name="iss_state_publisher",
+        output="screen",
+        parameters=[iss_description],
+        remappings=[("robot_description", "iss_description")]
     )
 
     # Add RViz node
@@ -50,7 +70,7 @@ def generate_launch_description():
         name='rviz',
         parameters=[
             {'use_sim_time': True},
-            robot_description
+            ib2_description
         ],
         arguments=['-d', rviz_config_dir]
     )
@@ -58,7 +78,8 @@ def generate_launch_description():
     # create and return launch description object
     return LaunchDescription(
         [
-            robot_state_publisher_node,  # Add this node
+            ib2_state_publisher_node,
+            iss_state_publisher_node,
             rviz_node,
         ]
     )
