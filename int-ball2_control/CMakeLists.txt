@@ -31,6 +31,8 @@ install(DIRECTORY
 
 # Install Python executables
 install(PROGRAMS
+  scripts/bag_tf_publisher.py
+  scripts/bag_wrench_multiplier.py
   scripts/direct_effort_control.py
   scripts/direct_velocity_control.py
   DESTINATION lib/${PROJECT_NAME}
