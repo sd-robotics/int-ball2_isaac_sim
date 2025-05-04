@@ -26,11 +26,14 @@ def generate_launch_description():
             package = 'int-ball2_control',
             executable = 'direct_effort_control.py',
             name = 'ib2_eff_ctrl',
-            output = 'screen'
+            output = 'screen',
+            parameters=[
+                {'use_sim_time': True},
+                ],
     )
 
     return LaunchDescription([
         joy_node,
-        # intball2_vel_joy_node,
-        intball2_effort_joy_node,
+        intball2_vel_joy_node,
+        # intball2_effort_joy_node,
     ])
