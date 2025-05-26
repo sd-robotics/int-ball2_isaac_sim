@@ -1,0 +1,9 @@
+# request
+---
+# response type
+int16 FAILURE_UPDATE = -1
+int16 FAILURE_CALL = 0
+int16 SUCCESS = 1
+# response
+builtin_interfaces/Time stamp
+int16 status

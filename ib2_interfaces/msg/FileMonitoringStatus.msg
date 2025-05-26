@@ -1,0 +1,2 @@
+builtin_interfaces/Time check_time
+string timesync_log
