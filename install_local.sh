@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Install general Python packages
 echo "Installing general Python packages..."
@@ -23,7 +24,7 @@ cd int-ball2_isaac_sim
 
 # Download the folder as a ZIP file
 echo "Starting download of assets..."
-gdown 1J0_ueT5xarewvBxCDvyKTfn-r0ggFGqH -O assets.zip
+gdown 1QsfOaWS-0is1ym5XxRF_tqr1Yi3pCfUz -O assets.zip
 
 # Check if the download was successful
 if [ ! -f "assets.zip" ]; then
@@ -36,7 +37,15 @@ unzip -qq assets.zip
 rm assets.zip
 echo "Download complete!"
 
-cd $CRT_DIR
+cd "$CRT_DIR"
+
+# Clone ib2 interface repository
+if [ ! -d "ib2_interfaces" ]; then
+    git clone git@github.com:sd-robotics/ib2_interfaces.git
+else
+    echo "ib2_interfaces directory already exists, skipping clone."
+fi
+
 
 # Install Isaac Sim dependencies
 wget -qO - https://isaac.download.nvidia.com/isaac-ros/repos.key | sudo apt-key add -
@@ -46,18 +55,20 @@ sudo apt-get update
 sudo apt-get install -y ros-humble-isaac-ros-nitros
 
 # Setup Isaac Sim launcher repository
-CRT_DIR=$(pwd)
 cd ..
-
-mkdir IsaacSim-ros_workspaces
-git init IsaacSim-ros_workspaces
-cd IsaacSim-ros_workspaces
-git remote add origin https://github.com/isaac-sim/IsaacSim-ros_workspaces.git
-git config core.sparseCheckout true
-git sparse-checkout set humble_ws/src/isaacsim
-git pull origin IsaacSim-4.2.0
-
-cd $CRT_DIR
+if [ ! -d "IsaacSim-ros_workspaces" ]; then
+    mkdir IsaacSim-ros_workspaces
+    cd IsaacSim-ros_workspaces
+    git init
+    git remote add origin https://github.com/isaac-sim/IsaacSim-ros_workspaces.git
+    git config core.sparseCheckout true
+    git sparse-checkout set humble_ws/src/isaacsim
+    git pull origin main
+    cd "$CRT_DIR"
+else
+    echo "IsaacSim-ros_workspaces directory already exists, skipping clone."
+    cd "$CRT_DIR"
+fi
 
 
 echo "Local installation complete!"
