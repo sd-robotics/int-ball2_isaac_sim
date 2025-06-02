@@ -112,7 +112,7 @@ source install/setup.bash
 ### Launch the Simulator
 Launch the simulation by ros2 launch.
 ```bash
-ros2 launch int-ball2_isaac_sim int-ball2_isaac_sim.launch.py gui:="~/int-ball2_ws/src/int-ball2_isaac_sim/assets/KIBOU.usd"
+ros2 launch ib2_isaac_sim int-ball2_isaac_sim.launch.py usd_file:="KIBOU.usd"
 ```
 
 > [!NOTE]
@@ -137,6 +137,12 @@ You can also change the perspective to look around the ISS Kibo (Japanese Experi
 > ```bash
 > prime-select query
 > ```
+
+### Launch demonstration of robot path from ISS rosbag
+```bash
+ros2 launch ib2_isaac_sim int-ball2_issbag_demo.launch.py bag_file:="<PATH/TO/ROSBAG>"
+```
+
 
 ### Feedback from ROS Bridge
 The following data can be obtained by the user program.
