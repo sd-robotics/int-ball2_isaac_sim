@@ -14,8 +14,8 @@ def generate_launch_description():
     
     bag_pose_pub_node = Node(
         package='ib2_data_replay',
-        executable='bag_pose_publisher.py',
-        name='bag_pose_publisher',
+        executable='bag_pose_replay_node',
+        name='bag_pose_replay_node',
         output='screen',
         parameters=[{
             'use_sim_time': True,

@@ -6,36 +6,39 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # find dependencies
-find_package(ament_cmake REQUIRED)
-find_package(rclpy REQUIRED)
-find_package(geometry_msgs REQUIRED)
-find_package(ib2_msgs REQUIRED)
+find_package(ament_cmake_auto REQUIRED)
+ament_auto_find_build_dependencies()
+
+# Component library
+ament_auto_add_library(bag_pose_replay
+  src/bag_pose_replay.cpp
+)
+rclcpp_components_register_nodes(bag_pose_replay "bag_pose_replay::BagPoseReplay")
+
+# Standalone executable
+ament_auto_add_executable(bag_pose_replay_node
+  src/bag_pose_replay_node.cpp
+)
+target_link_libraries(bag_pose_replay_node bag_pose_replay)
+
+# Install launch and headers
+install(DIRECTORY
+  launch
+  scripts
+  DESTINATION share/${PROJECT_NAME}/
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # comment the line when a copyright and license is added to all source files
-  set(ament_cmake_copyright_FOUND TRUE)
-  # the following line skips cpplint (only works in a git repo)
-  # comment the line when this package is in a git repo and when
-  # a copyright and license is added to all source files
   set(ament_cmake_cpplint_FOUND TRUE)
+  set(ament_cmake_copyright_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
 
 install(
-  DIRECTORY
-    launch
-    scripts
-  DESTINATION 
-    share/${PROJECT_NAME}/
-)
-
-install(
   PROGRAMS
     scripts/bag_pose_publisher.py
-  DESTINATION
-    lib/${PROJECT_NAME}
+  DESTINATION lib/${PROJECT_NAME}
 )
 
-ament_package()
+ament_auto_package()
