@@ -15,7 +15,7 @@
 
 <p style="display: inline">
   <img src="https://img.shields.io/badge/-Ubuntu_22.04_LTS-555555.svg?style=flat&logo=ubuntu">  
-  <img src="https://img.shields.io/badge/-Isaac_Sim 4.2.0-76B900.svg?style=flat&logo=nvidia&logoColor=white">
+  <img src="https://img.shields.io/badge/-Isaac_Sim 4.5.0-76B900.svg?style=flat&logo=nvidia&logoColor=white">
   <img src="https://img.shields.io/badge/-ROS2 Humble-%2322314E?style=flat&logo=ROS&logoColor=white">
   <img src="https://img.shields.io/badge/-Python 3.10-3776AB.svg?logo=python&style=flat&logoColor=white">
   <img src="https://img.shields.io/badge/License-Apache--2.0-60C060.svg?style=flat">
