@@ -7,37 +7,37 @@ from ib2_msgs.msg import Navigation
 from scipy.spatial.transform import Rotation as R
 import numpy as np
 
+
 class NavigationToWorldTwist(Node):
 
     def __init__(self):
         super().__init__('navigation_to_world_twist')
 
+        # Subscriber
         self.subscription = self.create_subscription(
             Navigation,
             '/sensor_fusion/navigation',
-            self.listener_callback,
+            self.ros_bag_pose_callback,
             10)
 
+        # Publisher
         self.twist_pub = self.create_publisher(Twist, '/transform_twist', 10)
 
-        self.msg_received = False
-        self.timer = self.create_timer(1.0, self.check_no_msg)
+        # Timer
+        self.timer = self.create_timer(0.1, self.publish_twist)
 
-        # Fixed transform: robot to world
+        # Pose of fixed docking station in world frame
         self.fixed_translation = np.array([10.88492, -3.53022, 4.07888])
         self.fixed_rotation_deg = [180.0, 0.32, -90.0]
-        self.threshold = 0.015
+        
+        self.delta_threshold = 0.05
 
-    def apply_threshold(self, value):
-        """
-        Avoids small values to be published as zero.
-        """
-        return 0.0 if abs(value) < self.threshold else value
+        self.prev_position = None
+        self.prev_euler = None
+        self.first_msg = True
+        self.msg_received = False
 
-    def listener_callback(self, msg):
-        """
-        Callback function to convert pose from robot's message to World's frame.
-        """
+    def ros_bag_pose_callback(self, msg):
         pos = np.array([
             msg.pose.pose.position.x,
             msg.pose.pose.position.y,
@@ -50,34 +50,41 @@ class NavigationToWorldTwist(Node):
             msg.pose.pose.orientation.w
         ]
 
-        # Robot pose as transformation matrix
         T_robot = np.eye(4)
         T_robot[:3, :3] = R.from_quat(quat).as_matrix()
         T_robot[:3, 3] = pos
 
-        # Fixed transform: robot → world
         T_fixed = np.eye(4)
         T_fixed[:3, :3] = R.from_euler('xyz', self.fixed_rotation_deg, degrees=True).as_matrix()
         T_fixed[:3, 3] = self.fixed_translation
 
-        # Combined transform: world = T_fixed * robot
+        # Transform robot pose to world frame
         T_world = T_fixed @ T_robot
         world_pos = T_world[:3, 3]
-        world_rot = R.from_matrix(T_world[:3, :3]).as_euler('xyz', degrees=True)
+
+        rot_matrix = T_world[:3, :3]
+        euler = R.from_matrix(rot_matrix).as_euler('xyz', degrees=True)
 
         twist_msg = Twist()
-        twist_msg.linear.x = self.apply_threshold(world_pos[0])
-        twist_msg.linear.y = self.apply_threshold(world_pos[1])
-        twist_msg.linear.z = self.apply_threshold(world_pos[2])
 
-        twist_msg.angular.x = self.apply_threshold(world_rot[0])
-        twist_msg.angular.y = self.apply_threshold(world_rot[1])
-        twist_msg.angular.z = self.apply_threshold(world_rot[2])
+        # Filtering noise
+        if self.first_msg or np.linalg.norm(world_pos - self.prev_position) > self.delta_threshold:
+            twist_msg.linear.x, twist_msg.linear.y, twist_msg.linear.z = world_pos
+            self.prev_position = world_pos
+        else:
+            twist_msg.linear.x, twist_msg.linear.y, twist_msg.linear.z = self.prev_position
+
+        if self.first_msg or np.linalg.norm(euler - self.prev_euler) > self.delta_threshold:
+            twist_msg.angular.x, twist_msg.angular.y, twist_msg.angular.z = euler
+            self.prev_euler = euler
+        else:
+            twist_msg.angular.x, twist_msg.angular.y, twist_msg.angular.z = self.prev_euler
 
         self.twist_pub.publish(twist_msg)
         self.msg_received = True
+        self.first_msg = False
 
-    def check_no_msg(self):
+    def publish_twist(self):
         if not self.msg_received:
             twist_msg = Twist()
             twist_msg.linear.x = self.fixed_translation[0]
