@@ -7,12 +7,32 @@ from launch.conditions import IfCondition
 
 def generate_launch_description():
     main_args = [
-        DeclareLaunchArgument('isaac_path', default_value='', description='Isaac Sim installation root folder if not default'),
-        DeclareLaunchArgument('issbag', default_value='True', description='If true, also launch bag_pose_replay.launch.py'),
+        DeclareLaunchArgument(
+            'isaac_path',
+            default_value='',
+            description='Isaac Sim installation root folder if not default'
+        ),
+        DeclareLaunchArgument(
+            'issbag',
+            default_value='True',
+            description='If true, also launch bag_pose_replay.launch.py'
+        ),
         # Optionally, add more DeclareLaunchArgument for bag_pose_replay if you want to pass them through
-        DeclareLaunchArgument('bag_file', default_value='', description='Bag file for replay'),
-        DeclareLaunchArgument('start_offset', default_value='520.0', description='Bag start offset'),
-        DeclareLaunchArgument('rate', default_value='10.0', description='Bag playback rate'),
+        DeclareLaunchArgument(
+            'bag_file',
+            default_value='',
+            description='Bag file for replay'
+        ),
+        DeclareLaunchArgument(
+            'start_offset',
+            default_value='520.0',
+            description='Bag start offset'
+        ),
+        DeclareLaunchArgument(
+            'rate', 
+            default_value='10.0',
+            description='Bag playback rate'
+        ),
     ]
 
     kibou_demo_usd = PathJoinSubstitution([
