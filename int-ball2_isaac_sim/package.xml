@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>int-ball2_isaac_sim</name>
+  <name>ib2_isaac_sim</name>
   <version>0.0.0</version>
   <description>Package for Int-Ball2 simulation in KIBOU space station environment</description>
   <maintainer email="tharit.sinsunthorn.r1@dc.tohoku.ac.jp">mslaptop2</maintainer>
