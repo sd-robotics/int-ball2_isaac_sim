@@ -10,6 +10,7 @@ def generate_launch_description():
         DeclareLaunchArgument('remap', default_value='', description='Remap rules, e.g. /old:=/new'),
         DeclareLaunchArgument('start_offset', default_value='550.0', description='Delay in seconds before starting playback'),
         DeclareLaunchArgument('topics', default_value='', description='Comma-separated list of topics to play (empty for all)'),
+        DeclareLaunchArgument('storage', default_value='sqlite3', description='Storage backend for the bag file (sqlite3, mcap)'),
     ]
     
     bag_pose_pub_node = Node(
@@ -28,6 +29,7 @@ def generate_launch_description():
             LaunchConfiguration('bag_file'),
             '--start-offset', LaunchConfiguration('start_offset'),
             '--rate', LaunchConfiguration('rate'),
+            '--storage', LaunchConfiguration('storage'),
             # You can manually pass topics/remaps here or use launch arguments later
         ],
         output='screen'
