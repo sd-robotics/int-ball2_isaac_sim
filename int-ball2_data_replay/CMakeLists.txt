@@ -24,7 +24,6 @@ target_link_libraries(bag_pose_replay_node bag_pose_replay)
 # Install launch and headers
 install(DIRECTORY
   launch
-  scripts
   DESTINATION share/${PROJECT_NAME}/
 )
 
@@ -34,11 +33,5 @@ if(BUILD_TESTING)
   set(ament_cmake_copyright_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
-
-install(
-  PROGRAMS
-    scripts/bag_pose_publisher.py
-  DESTINATION lib/${PROJECT_NAME}
-)
 
 ament_auto_package()
