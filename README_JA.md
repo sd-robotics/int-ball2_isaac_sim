@@ -38,6 +38,7 @@
     2. [シミュレータの起動方法](#シミュレータの起動方法)
     3. [ROS Bridgeによるデータ取得](#ros-bridgeによるデータ取得)
     4. [遠隔操作 (ジョイコントローラ)](#遠隔操作-ジョイコントローラ)
+    5. [ISS上の実機データの再生](#ISS上の実機データの再生)
 
 5. [**データの可視化**](#データの可視化)
 
@@ -183,6 +184,28 @@ ros2 launch int-ball2_control int-ball2_teleop.launch.py
 - Z軸：Aボタン＋RTまたはLT。
 
 ![Int-Ball2 Teleop](img/int-ball2_teleop.png)
+
+
+### ISS上の実機データの再生
+SpaceDataは、ISS上の実機Int-Ball2のデータを収集する機会を得ました。
+これらのROSBagsは[HuggingFace](https://huggingface.co/datasets/SpaceData/int-ball2_data_on_iss)で公開されており、本シミュレータ上でも再生することができます。
+
+1. まず、[HuggingFace CLI](https://huggingface.co/docs/huggingface_hub/main/ja/guides/cli)を使ってROSBagsデータをダウンロードします。
+```bash
+cd ~/int-ball2_ws/src/int-ball2_isaac_sim/int-ball2_data_replay/
+# ダウンロードしたいROSBagsを選択してください
+huggingface-cli download --repo-type dataset --local-dir ./ SpaceData/int-ball2_data_on_iss bags/rosbag_20250421111514.bag
+```
+2. 実機Int-Ball2はROS Melodicで動作しているため、[Rosbags](https://gitlab.com/ternaris/rosbags)を使ってROS2で再生できる形式に変換します。
+```bash
+cd bags/
+rosbags-convert --src rosbag_20250421111514.bag --dst-storage sqlite3 --dst ./rosbag2_20250421111514
+```
+3. 変換したROSBagsを使ってIsaac Simを起動します。
+```bash
+ros2 launch ib2_isaac_sim int-ball2_issbag_demo.launch.py bag_file:="<ABSOLUTE/PATH/TO/ROSBAG>"
+```
+
 
 ## データの可視化
 ワークスペースをソースします。

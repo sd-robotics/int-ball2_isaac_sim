@@ -15,7 +15,7 @@
 
 <p style="display: inline">
   <img src="https://img.shields.io/badge/-Ubuntu_22.04_LTS-555555.svg?style=flat&logo=ubuntu">  
-  <img src="https://img.shields.io/badge/-Isaac_Sim 4.2.0-76B900.svg?style=flat&logo=nvidia&logoColor=white">
+  <img src="https://img.shields.io/badge/-Isaac_Sim 4.5.0-76B900.svg?style=flat&logo=nvidia&logoColor=white">
   <img src="https://img.shields.io/badge/-ROS2 Humble-%2322314E?style=flat&logo=ROS&logoColor=white">
   <img src="https://img.shields.io/badge/-Python 3.10-3776AB.svg?logo=python&style=flat&logoColor=white">
   <img src="https://img.shields.io/badge/License-Apache--2.0-60C060.svg?style=flat">
@@ -38,6 +38,7 @@
     2. [Launch the Simulator](#launch-the-simulator)
     3. [Feedback from ROS Bridge](#feedback-from-ros-bridge)
     4. [Teleoperation (Joy Controller)](#teleoperation-joy-controller)
+    5. [ISS Robot Real Data Replaying](#iss-robot-real-data-replaying)
 
 5. [**Data Visualization**](#data-visualization)
 
@@ -112,7 +113,7 @@ source install/setup.bash
 ### Launch the Simulator
 Launch the simulation by ros2 launch.
 ```bash
-ros2 launch int-ball2_isaac_sim int-ball2_isaac_sim.launch.py gui:="~/int-ball2_ws/src/int-ball2_isaac_sim/assets/KIBOU.usd"
+ros2 launch ib2_isaac_sim int-ball2_isaac_sim.launch.py usd_file:="KIBOU.usd"
 ```
 
 > [!NOTE]
@@ -182,6 +183,29 @@ For rotational movement:
 - A button + RT or LT for Z-axis.
 
 ![Int-Ball2 Teleop](img/int-ball2_teleop.png)
+
+
+### ISS Robot Real Data Replaying
+
+SpaceData had the opportunity to collect data of the actual Int-Ball2 in the ISS.
+Those ROSBags are publicily available in [HuggingFace](https://huggingface.co/datasets/SpaceData/int-ball2_data_on_iss) and can be replayed in our simulator.
+
+1. Lets download the ROSBag data using the [HuggingFace CLI](https://huggingface.co/docs/huggingface_hub/main/en/guides/cli).
+```bash
+cd ~/int-ball2_ws/src/int-ball2_isaac_sim/int-ball2_data_replay/
+# Choose the ROSbag you want to download
+huggingface-cli download --repo-type dataset --local-dir ./ SpaceData/int-ball2_data_on_iss bags/rosbag_20250421111514.bag
+```
+2. Remember that the actual Int-Ball2 runs on ROS Melodic, then we need to convert the ROSBag so that is playable in ROS2 using [Rosbags](https://gitlab.com/ternaris/rosbags).
+```bash
+cd bags/
+rosbags-convert --src rosbag_20250421111514.bag --dst-storage sqlite3 --dst ./rosbag2_20250421111514
+```
+3. Now, lets launch Isaac Sim with the updated ROSBag.
+```bash
+ros2 launch ib2_isaac_sim int-ball2_issbag_demo.launch.py bag_file:="<ABSOLUTE/PATH/TO/ROSBAG>"
+```
+
 
 ## Data Visualization
 Source your workspace.

@@ -8,11 +8,12 @@ install/*
 bin/*
 lib/*
 
-.vscode/*
+.vscode/
 !.vscode/extensions.json
 !.vscode/c_cpp_properties.json
 .vscode/settings.json
 
+*.part
 *.thumbs
 *.swp
 *.zip
