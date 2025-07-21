@@ -5,7 +5,7 @@
   <version>0.0.0</version>
   <description>This package contains scripts and nodes for subscribing to topics from a ROS bag file and republishing the data to a simulation environment, enabling playback and testing of recorded data in the simulation.</description>
   <maintainer email="sintharit1716@gmail.com">tharitubun</maintainer>
-  <license>TODO: License declaration</license>
+  <license>Apache 2.0</license>
 
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
 
