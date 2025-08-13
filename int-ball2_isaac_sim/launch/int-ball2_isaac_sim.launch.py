@@ -57,7 +57,7 @@ def generate_launch_description():
     ])
 
     isaacsim_launch_file = PathJoinSubstitution([
-        FindPackageShare('isaacsim'),
+        FindPackageShare('ib2_isaac_sim'),
         'launch',
         'run_isaacsim.launch.py'
     ])
@@ -67,7 +67,7 @@ def generate_launch_description():
         launch_arguments={
             'version': LaunchConfiguration('isaac_sim_version'),
             'install_path': LaunchConfiguration('isaac_path'),
-            'gui': asset_path,
+            # 'gui': asset_path,
             'play_sim_on_start': LaunchConfiguration('play_on_start'),
             'use_internal_libs': LaunchConfiguration('use_internal_libs'),
             'dds_type': LaunchConfiguration('dds_type'),
