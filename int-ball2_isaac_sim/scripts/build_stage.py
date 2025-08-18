@@ -40,6 +40,15 @@ async def create_scene(env_path: str, robot_path: str):
         target=np.array([11.18, -4.9, 4.5])
     )
 
+    stage = get_context().get_stage()
+
+    # Set gravity before adding the robot
+    set_gravity(
+        stage=stage,
+        direction=(0.0, 0.0, 0.0),
+        magnitude=0.0
+    )
+    
     # import robot
     robot_name = "INTBALL2"
     intball_prim_path = f'/World/{robot_name}'
@@ -62,14 +71,6 @@ async def create_scene(env_path: str, robot_path: str):
     my_world.scene.add(arti_view)
     await my_world.reset_async(soft=False)
 
-    stage = get_context().get_stage()
-
-    # Set gravity before adding the robot
-    set_gravity(
-        stage=stage,
-        direction=(0.0, 0.0, 0.0),
-        magnitude=0.0
-    )
 
     print("__WELCOME TO KIBOU ISS!__")
 
