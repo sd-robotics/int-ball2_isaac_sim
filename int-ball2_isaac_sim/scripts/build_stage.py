@@ -57,8 +57,8 @@ async def create_scene(env_path: str, robot_path: str):
     robot = Robot(
         prim_path=intball_prim_path,
         name=robot_name,
-        position=(11.06, -6.6, 4.5),  # This pose is base on the position of kibou_body in the KIBOU.usd
-        orientation=(0.0, 0.0, 0.0, -1.0),
+        position=(10.88492, -3.53022, 4.07888),  # This pose is base on the position of kibou_body in the KIBOU.usd
+        orientation=(-0.001975, 0.707104, -0.707104, 0.001975), # (w,x,y,z)
         scale=(0.01, 0.01, 0.01),
     )
 
