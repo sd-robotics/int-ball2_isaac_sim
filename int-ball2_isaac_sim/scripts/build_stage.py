@@ -3,6 +3,7 @@ from omni.usd import get_context
 import omni.client
 import omni.kit.async_engine
 import omni.timeline
+import omni.kit.viewport.utility as vu
 from isaacsim.core.prims import SingleArticulation
 from isaacsim.core.api.robots import Robot
 from isaacsim.core.utils.stage import (
@@ -34,12 +35,6 @@ async def create_scene(env_path: str, robot_path: str):
     await my_world.initialize_simulation_context_async()
     await omni.kit.app.get_app().next_update_async()
 
-    # Set perspective camera view
-    set_camera_view(
-        eye=np.array([11.18, -10.3, 4.5]),
-        target=np.array([11.18, -4.9, 4.5])
-    )
-
     stage = get_context().get_stage()
 
     # Set gravity before adding the robot
@@ -66,11 +61,14 @@ async def create_scene(env_path: str, robot_path: str):
     await omni.kit.app.get_app().next_update_async()
 
     add_reference_to_stage(env_path, '/World/ISS_frame')
+    
+    # Set camera to ISS camera as default
+    vp_api = vu.get_active_viewport()
+    vp_api.camera_path = '/World/ISS_frame/ISS_Camera'
 
     arti_view = SingleArticulation(intball_prim_path)
     my_world.scene.add(arti_view)
     await my_world.reset_async(soft=False)
-
 
     print("__WELCOME TO KIBOU ISS!__")
 
