@@ -19,3 +19,4 @@ lib/*
 *.zip
 
 int-ball2_isaac_sim/assets
+ib2_interfaces/
