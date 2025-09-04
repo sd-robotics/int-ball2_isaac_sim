@@ -8,14 +8,9 @@
 ![GitHub fork](https://img.shields.io/github/forks/sd-robotics/int-ball2_isaac_sim)
 ![GitHub stars](https://img.shields.io/github/stars/sd-robotics/int-ball2_isaac_sim)
 
-<!--  [![Ubuntu22.04](https://img.shields.io/badge/Ubuntu-22.04-orange.svg)](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview) -->
-<!-- [![IsaacSim](https://img.shields.io/badge/IsaacSim-4.2.0-green.svg)](https://docs.omniverse.nvidia.com/isaacsim/latest/overview.html) -->
-<!-- [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://docs.python.org/3/whatsnew/3.10.html) -->
-<!-- [![ros2-humble installation](https://img.shields.io/badge/ROS2-Humble-blue.svg)](https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html) -->
-
 <p style="display: inline">
   <img src="https://img.shields.io/badge/-Ubuntu_22.04_LTS-555555.svg?style=flat&logo=ubuntu">  
-  <img src="https://img.shields.io/badge/-Isaac_Sim 4.2.0-76B900.svg?style=flat&logo=nvidia&logoColor=white">
+  <img src="https://img.shields.io/badge/-Isaac_Sim 4.5.0-76B900.svg?style=flat&logo=nvidia&logoColor=white">
   <img src="https://img.shields.io/badge/-ROS2 Humble-%2322314E?style=flat&logo=ROS&logoColor=white">
   <img src="https://img.shields.io/badge/-Python 3.10-3776AB.svg?logo=python&style=flat&logoColor=white">
   <img src="https://img.shields.io/badge/License-Apache--2.0-60C060.svg?style=flat">
@@ -30,8 +25,7 @@
 
 3. [**インストール**](#インストール)
     1. [リポジトリのクローン](#リポジトリのクローン)
-    2. [依存関係のインストール](#依存関係のインストール)
-    3. [アセットのダウンロード](#アセットのダウンロード)
+    2. [アセットのダウンロードと依存関係のインストール](#アセットのダウンロードと依存関係のインストール)
 
 4. [**使い方**](#使い方)
     1. [ビルド & ソース](#ビルド--ソース)
@@ -63,7 +57,7 @@ ISS/JEM環境におけるInt-Ball2の挙動を、ユーザー開発プログラ�
 |  Package  |         Version         |
 | --------- | ----------------------- |
 |   Ubuntu  | 22.04 (Jammy Jellyfish) |
-| Isaac Sim | 4.2.0 (September 2024)  |
+| Isaac Sim |          4.5.0          |
 |    ROS    |     Humble Hawksbill    |
 |   Python  |          3.10 <=        |
 
@@ -80,24 +74,13 @@ cd ~/int-ball2_ws/src
 git clone https://github.com/sd-robotics/int-ball2_isaac_sim.git
 ```
 
-### 依存関係のインストール
-ワークスペースまで移動します。
-```bash
-cd ~/int-ball2_ws/
-```
-
-依存関係をインストールします。
-``` bash
-rosdep install --from-paths src --ignore-src -r -y
-```
-
-### アセットのダウンロード
+### アセットのダウンロードと依存関係のインストール
 プロジェクトまで移動します。
 ```bash
 cd ~/int-ball2_ws/src/int-ball2_isaac_sim
 ```
 
-アセットをダウンロードします（Int-Ball2、JEM等）。
+アセットをダウンロードと依存関係のインストールを行います。
 ```bash
 bash install_local.sh
 ```
@@ -114,7 +97,7 @@ source install/setup.bash
 ### シミュレータの起動方法
 ros2 launchでシミュレータを起動します。
 ```bash
-ros2 launch int-ball2_isaac_sim int-ball2_isaac_sim.launch.py gui:="~/int-ball2_ws/src/int-ball2_isaac_sim/assets/KIBOU.usd"
+ros2 launch ib2_isaac_sim int-ball2_isaac_sim.launch.py usd_file:="KIBOU.usd"
 ```
 
 > [!NOTE]
