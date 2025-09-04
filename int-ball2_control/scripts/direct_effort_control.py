@@ -3,7 +3,7 @@
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Joy
-from geometry_msgs.msg import Wrench
+from geometry_msgs.msg import WrenchStamped
 
 class IntBall2ForceController(Node):
     def __init__(self):
@@ -22,7 +22,7 @@ class IntBall2ForceController(Node):
         )
 
         # Publisher for force/torque
-        self.wrench_publisher = self.create_publisher(Wrench, "/ctl/wrench", 10)
+        self.wrench_publisher = self.create_publisher(WrenchStamped, "/ctl/wrench", 10)
 
         self.get_logger().info("Int-Ball2 Force Controller Node Initialized")
 
@@ -30,30 +30,31 @@ class IntBall2ForceController(Node):
         """
         Callback for handling joystick inputs and mapping them to Wrench messages.
         """
-        wrench = Wrench()
+        wrench = WrenchStamped()
+        wrench.header.stamp = self.get_clock().now().to_msg()
 
         # Left stick controls force in X and Y
-        wrench.force.x = msg.axes[1] * self.force_scale    # Left stick X
-        wrench.force.y = msg.axes[0] * self.force_scale    # Left stick Y
+        wrench.wrench.force.x = msg.axes[1] * self.force_scale    # Left stick X
+        wrench.wrench.force.y = msg.axes[0] * self.force_scale    # Left stick Y
 
         # Right stick controls rotation (torque) in X and Y
-        wrench.torque.x = msg.axes[4] * self.torque_scale  # Right stick X
-        wrench.torque.y = msg.axes[3] * self.torque_scale  # Right stick Y
+        wrench.wrench.torque.x = msg.axes[4] * self.torque_scale  # Right stick X
+        wrench.wrench.torque.y = msg.axes[3] * self.torque_scale  # Right stick Y
 
         # L2 (Axis 2) and R2 (Axis 5) control force in Z
         L2 = (1 - msg.axes[2]) / 2  # Convert from [-1, 1] to [0, 1]
         R2 = (1 - msg.axes[5]) / 2  # Convert from [-1, 1] to [0, 1]
         
         if msg.buttons[1]:
-            wrench.force.z  = (R2 - L2) * self.force_scale  # R2 increases, L2 decreases
+            wrench.wrench.force.z  = (R2 - L2) * self.force_scale  # R2 increases, L2 decreases
         elif msg.buttons[0]:
-            wrench.torque.z = (R2 - L2) * self.torque_scale # R2 increases, L2 decreases
+            wrench.wrench.torque.z = (R2 - L2) * self.torque_scale # R2 increases, L2 decreases
 
         # Publish the wrench message
         self.wrench_publisher.publish(wrench)
         self.get_logger().info(
-            f"Published wrench: Force({wrench.force.x}, {wrench.force.y}, {wrench.force.z}) | "
-            f"Torque({wrench.torque.x}, {wrench.torque.y}, {wrench.torque.z})"
+            f"Published wrench: Force({wrench.wrench.force.x}, {wrench.wrench.force.y}, {wrench.wrench.force.z}) | "
+            f"Torque({wrench.wrench.torque.x}, {wrench.wrench.torque.y}, {wrench.wrench.torque.z})"
         )
 
 def main(args=None):
