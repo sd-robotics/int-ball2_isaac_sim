@@ -41,7 +41,7 @@ cd "$CRT_DIR"
 
 # Clone ib2 interface repository
 if [ ! -d "ib2_interfaces" ]; then
-    git clone git@github.com:sd-robotics/ib2_interfaces.git
+    git clone https://github.com/sd-robotics/ib2_interfaces.git
 else
     echo "ib2_interfaces directory already exists, skipping clone."
 fi
