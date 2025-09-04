@@ -70,5 +70,9 @@ else
     cd "$CRT_DIR"
 fi
 
+# rosdep dependencies
+echo "Install ros2 packages dependencies"
+cd ../../
+rosdep install --from-paths src --ignore-src -r -y
 
 echo "Local installation complete!"
