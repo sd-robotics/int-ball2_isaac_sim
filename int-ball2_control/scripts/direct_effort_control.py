@@ -52,7 +52,7 @@ class IntBall2ForceController(Node):
 
         # Publish the wrench message
         self.wrench_publisher.publish(wrench_st)
-        self.get_logger().info(
+        self.get_logger().debug(
             f"Published wrench: Force({wrench_st.wrench.force.x}, {wrench_st.wrench.force.y}, {wrench_st.wrench.force.z}) | "
             f"Torque({wrench_st.wrench.torque.x}, {wrench_st.wrench.torque.y}, {wrench_st.wrench.torque.z})"
         )

@@ -50,7 +50,7 @@ class IntBall2VelocityController(Node):
 
         # Publish the twist message
         self.twist_publisher.publish(twist)
-        self.get_logger().info(
+        self.get_logger().debug(
             f"Published Twist: Linear({twist.linear.x}, {twist.linear.y}, {twist.linear.z}) | "
             f"Angular({twist.angular.x}, {twist.angular.y}, {twist.angular.z})"
         )
