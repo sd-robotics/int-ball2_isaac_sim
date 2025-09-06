@@ -82,7 +82,8 @@ git clone https://github.com/sd-robotics/int-ball2_isaac_sim.git
 cd ~/int-ball2_ws/src/int-ball2_isaac_sim
 ```
 
-アセットをダウンロードと依存関係のインストールを行います。
+アセットをダウンロードと依存パッケージのインストールを行います。
+
 ```bash
 bash install_local.sh
 ```
