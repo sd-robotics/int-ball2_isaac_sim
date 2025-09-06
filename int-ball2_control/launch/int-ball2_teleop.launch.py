@@ -19,14 +19,20 @@ def generate_launch_description():
             package = 'int-ball2_control',
             executable = 'direct_velocity_control.py',
             name = 'ib2_vel_ctrl',
-            output = 'screen'
+            output = 'screen',
+            parameters=[{
+                'use_sim_time': True
+            }]
     )
     
     intball2_effort_joy_node = Node(
             package = 'int-ball2_control',
             executable = 'direct_effort_control.py',
             name = 'ib2_eff_ctrl',
-            output = 'screen'
+            output = 'screen',
+            parameters=[{
+                'use_sim_time': True
+            }]
     )
 
     return LaunchDescription([
