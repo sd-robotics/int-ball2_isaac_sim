@@ -30,31 +30,31 @@ class IntBall2ForceController(Node):
         """
         Callback for handling joystick inputs and mapping them to Wrench messages.
         """
-        wrench = WrenchStamped()
-        wrench.header.stamp = self.get_clock().now().to_msg()
+        wrench_st = WrenchStamped()
+        wrench_st.header.stamp = self.get_clock().now().to_msg()
 
         # Left stick controls force in X and Y
-        wrench.wrench.force.x = msg.axes[1] * self.force_scale    # Left stick X
-        wrench.wrench.force.y = msg.axes[0] * self.force_scale    # Left stick Y
+        wrench_st.wrench.force.x = msg.axes[1] * self.force_scale    # Left stick X
+        wrench_st.wrench.force.y = msg.axes[0] * self.force_scale    # Left stick Y
 
         # Right stick controls rotation (torque) in X and Y
-        wrench.wrench.torque.x = msg.axes[4] * self.torque_scale  # Right stick X
-        wrench.wrench.torque.y = msg.axes[3] * self.torque_scale  # Right stick Y
+        wrench_st.wrench.torque.x = msg.axes[4] * self.torque_scale  # Right stick X
+        wrench_st.wrench.torque.y = msg.axes[3] * self.torque_scale  # Right stick Y
 
         # L2 (Axis 2) and R2 (Axis 5) control force in Z
         L2 = (1 - msg.axes[2]) / 2  # Convert from [-1, 1] to [0, 1]
         R2 = (1 - msg.axes[5]) / 2  # Convert from [-1, 1] to [0, 1]
         
         if msg.buttons[1]:
-            wrench.wrench.force.z  = (R2 - L2) * self.force_scale  # R2 increases, L2 decreases
+            wrench_st.wrench.force.z  = (R2 - L2) * self.force_scale  # R2 increases, L2 decreases
         elif msg.buttons[0]:
-            wrench.wrench.torque.z = (R2 - L2) * self.torque_scale # R2 increases, L2 decreases
+            wrench_st.wrench.torque.z = (R2 - L2) * self.torque_scale # R2 increases, L2 decreases
 
         # Publish the wrench message
-        self.wrench_publisher.publish(wrench)
+        self.wrench_publisher.publish(wrench_st)
         self.get_logger().info(
-            f"Published wrench: Force({wrench.wrench.force.x}, {wrench.wrench.force.y}, {wrench.wrench.force.z}) | "
-            f"Torque({wrench.wrench.torque.x}, {wrench.wrench.torque.y}, {wrench.wrench.torque.z})"
+            f"Published wrench: Force({wrench_st.wrench.force.x}, {wrench_st.wrench.force.y}, {wrench_st.wrench.force.z}) | "
+            f"Torque({wrench_st.wrench.torque.x}, {wrench_st.wrench.torque.y}, {wrench_st.wrench.torque.z})"
         )
 
 def main(args=None):
