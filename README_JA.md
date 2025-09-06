@@ -75,7 +75,8 @@ cd ~/int-ball2_ws/src
 git clone https://github.com/sd-robotics/int-ball2_isaac_sim.git
 ```
 
-### アセットのダウンロードと依存関係のインストール
+### アセットのダウンロードと依存パッケージのインストール
+
 プロジェクトまで移動します。
 ```bash
 cd ~/int-ball2_ws/src/int-ball2_isaac_sim
