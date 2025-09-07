@@ -19,11 +19,11 @@ if ! command -v gdown &> /dev/null; then
     exit 1
 fi
 
-CRT_DIR=$(pwd)                                 # .../intball2_ws/src/int-ball2_isaac_sim
-SRC_DIR=$(dirname "$CRT_DIR")                  # .../intball2_ws/src
+PKG_DIR=$(pwd)                                 # .../intball2_ws/src/int-ball2_isaac_sim
+SRC_DIR=$(dirname "$PKG_DIR")                  # .../intball2_ws/src
 WS_DIR=$(realpath "$SRC_DIR/..")               # .../intball2_ws
 
-cd int-ball2_isaac_sim
+cd "$PKG_DIR"
 
 # Download the folder as a ZIP file
 echo "Starting download of assets..."
