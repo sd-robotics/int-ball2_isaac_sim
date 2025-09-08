@@ -19,8 +19,11 @@ if ! command -v gdown &> /dev/null; then
     exit 1
 fi
 
-CRT_DIR=$(pwd)
-cd int-ball2_isaac_sim
+PKG_DIR=$(pwd)                                 # .../intball2_ws/src/int-ball2_isaac_sim
+SRC_DIR=$(dirname "$PKG_DIR")                  # .../intball2_ws/src
+WS_DIR=$(realpath "$SRC_DIR/..")               # .../intball2_ws
+
+cd "$PKG_DIR"
 
 # Download the folder as a ZIP file
 echo "Starting download of assets..."
@@ -37,15 +40,13 @@ unzip -qq assets.zip
 rm assets.zip
 echo "Download complete!"
 
-cd "$CRT_DIR"
-
 # Clone ib2 interface repository
+cd "$SRC_DIR"
 if [ ! -d "ib2_interfaces" ]; then
-    git clone git@github.com:sd-robotics/ib2_interfaces.git
+    git clone https://github.com/sd-robotics/ib2_interfaces.git
 else
     echo "ib2_interfaces directory already exists, skipping clone."
 fi
-
 
 # Install Isaac Sim dependencies
 wget -qO - https://isaac.download.nvidia.com/isaac-ros/repos.key | sudo apt-key add -
@@ -54,8 +55,8 @@ echo "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -c
 sudo apt-get update
 sudo apt-get install -y ros-humble-isaac-ros-nitros
 
-# Setup Isaac Sim launcher repository
-cd ..
+# Setup Isaac Sim launcher repository under src
+cd "$SRC_DIR"
 if [ ! -d "IsaacSim-ros_workspaces" ]; then
     mkdir IsaacSim-ros_workspaces
     cd IsaacSim-ros_workspaces
@@ -64,11 +65,13 @@ if [ ! -d "IsaacSim-ros_workspaces" ]; then
     git config core.sparseCheckout true
     git sparse-checkout set humble_ws/src/isaacsim
     git pull origin main
-    cd "$CRT_DIR"
 else
     echo "IsaacSim-ros_workspaces directory already exists, skipping clone."
-    cd "$CRT_DIR"
 fi
 
+# rosdep dependencies
+echo "Install ros2 packages dependencies"
+cd "$WS_DIR"
+rosdep install --from-paths "$SRC_DIR" --ignore-src -r -y
 
 echo "Local installation complete!"
