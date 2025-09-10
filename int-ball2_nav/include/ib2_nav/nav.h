@@ -338,6 +338,9 @@ private:
     /**  角速度ランダム誤差[deg/s]*/
     geometry_msgs::msg::Vector3    rand_w_;
 
+    /** 前回位置 */
+    geometry_msgs::msg::Point      prev_pos_;
+
     /**  ノミナル制御周期[Hz]*/
     double                         bias_cnt_;
 
@@ -361,7 +364,13 @@ private:
     
     /** 航法時刻オフセット */
     rclcpp::Duration               tnav_offset_;
-    
+
+    /** 前回時刻 */
+    rclcpp::Time                   prev_time_;
+
+    /** 前回時刻の有無 */
+    bool                           has_prev_;
+
     /** 航法データ異常値 */
     bool                           invalid_nav_;
 

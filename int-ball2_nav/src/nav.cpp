@@ -24,7 +24,8 @@ namespace
 ib2::Nav::Nav(const rclcpp::NodeOptions& options = rclcpp::NodeOptions()) :
     rclcpp::Node("nav", options),
     tf_buffer_(this->get_clock()), tf_listener_(tf_buffer_),
-    tnav_offset_(0,0)
+    tnav_offset_(0,0),
+    prev_time_(this->now(), RCL_ROS_TIME)
 {
     // Get Parameters
     if(getParameter() != 0)
@@ -102,6 +103,7 @@ ib2::Nav::Nav(const rclcpp::NodeOptions& options = rclcpp::NodeOptions()) :
         ib2_interfaces::msg::NavigationStatus::NAV_FUSION :
         ib2_interfaces::msg::NavigationStatus::NAV_OFF;
     invalid_nav_ = false;
+    has_prev_    = false;
 
 }
 
@@ -122,46 +124,77 @@ void ib2::Nav::navCallBack()
     // Get True Navigation in docking station coordination frame
     ib2_interfaces::msg::Navigation nav_msgs_h = getTrueNavigation();
 
+
+    // Extract current position and time
+    geometry_msgs::msg::Point current_pos = nav_msgs_h.pose.pose.position;
+    rclcpp::Time current_time = nav_msgs_h.pose.header.stamp;
+
+
     // Transform World Coordination to Home Coordination
     // Not needed as we are already in the home (DS) coordination frame
     // ib2_interfaces::msg::Navigation nav_msgs_h = transformWtoH(nav_msgs_w);
 
-    // Publish True Navigation Message
-    pub_true_nav_->publish(nav_msgs_h);
+    // TODO: Isaac Sim 4.5.0 does not support getVelocity function yet.
+    // Therefore, we calculate velocity from position and time difference.
+    if (has_prev_) {
+        // Calculate time difference in seconds
+        double dt = (current_time - prev_time_).seconds();
 
-    // Publish True Attitude Message
-    pub_true_att_->publish(makeAttMsgFromNavMsg(nav_msgs_h));
-
-    // Add Error
-    if (add_error_)
-    {
-        nav_msgs_h = addError(nav_msgs_h);
-        if (invalid_nav_)
-        {
-            nav_msgs_h.pose.pose.position.z = std::numeric_limits<double>::quiet_NaN();
+        // Avoid division by zero
+        if (dt > 0.0) {
+            // Calculate velocity
+            double v_x = (current_pos.x - prev_pos_.x) / dt;
+            double v_y = (current_pos.y - prev_pos_.y) / dt;
+            double v_z = (current_pos.z - prev_pos_.z) / dt;
+            nav_msgs_h.twist.linear.x  = v_x;
+            nav_msgs_h.twist.linear.y  = v_y;
+            nav_msgs_h.twist.linear.z  = v_z;
+        } else {
+            RCLCPP_DEBUG(this->get_logger(), "Time difference is zero or negative, cannot compute velocity");
         }
 
-        // Navigation Delay Model
-        nav_buffer_.push(nav_msgs_h);
-        int size = static_cast<int>(bias_cnt_ * delay_ + 0.5 + EPS);  // size will never be < 0
-        if(nav_buffer_.size() >= (size_t)(size + 1))
-        {
-            RCLCPP_DEBUG(this->get_logger(), "Navigation Delay is %f[s]",
-                        (this->now() - nav_buffer_.front().pose.header.stamp).seconds());
+        // Publish True Navigation Message
+        pub_true_nav_->publish(nav_msgs_h);
 
+        // Publish True Attitude Message
+        pub_true_att_->publish(makeAttMsgFromNavMsg(nav_msgs_h));
+
+        // Add Error
+        if (add_error_)
+        {
+            nav_msgs_h = addError(nav_msgs_h);
+            if (invalid_nav_)
+            {
+                nav_msgs_h.pose.pose.position.z = std::numeric_limits<double>::quiet_NaN();
+            }
+
+            // Navigation Delay Model
+            nav_buffer_.push(nav_msgs_h);
+            int size = static_cast<int>(bias_cnt_ * delay_ + 0.5 + EPS);  // size will never be < 0
+            if(nav_buffer_.size() >= (size_t)(size + 1))
+            {
+                RCLCPP_DEBUG(this->get_logger(), "Navigation Delay is %f[s]",
+                            (this->now() - nav_buffer_.front().pose.header.stamp).seconds());
+
+                // Publish Navigation Message
+                pub_nav_->publish(nav_buffer_.front());
+                // Publish Attitude Message
+                pub_att_->publish(makeAttMsgFromNavMsg(nav_buffer_.front()));
+
+                nav_buffer_.pop();
+            }
+        } else {
             // Publish Navigation Message
-            pub_nav_->publish(nav_buffer_.front());
+            pub_nav_->publish(nav_msgs_h);
             // Publish Attitude Message
-            pub_att_->publish(makeAttMsgFromNavMsg(nav_buffer_.front()));
-
-            nav_buffer_.pop();
+            pub_att_->publish(makeAttMsgFromNavMsg(nav_msgs_h));
         }
-    } else {
-        // Publish Navigation Message
-        pub_nav_->publish(nav_msgs_h);
-        // Publish Attitude Message
-        pub_att_->publish(makeAttMsgFromNavMsg(nav_msgs_h));
     }
+
+    // Update previous position and time
+    prev_pos_  = current_pos;
+    prev_time_ = current_time;
+    has_prev_  = true;
 
     // Get Control Duration[s]
     double cnt_duration = controlFreqFluctuation();
@@ -248,10 +281,10 @@ ib2_interfaces::msg::Navigation ib2::Nav::getTrueNavigation()
         nav_msgs.pose.pose.position      = latest_odom_->pose.pose.position;
         nav_msgs.pose.pose.orientation   = latest_odom_->pose.pose.orientation;
         nav_msgs.twist.linear            = latest_odom_->twist.twist.linear;
-        nav_msgs.twist.angular           = latest_odom_->twist.twist.angular;
+        // nav_msgs.twist.angular           = latest_odom_->twist.twist.angular;
 
         // From imu: angular velocity, linear acceleration
-        // nav_msgs.twist.angular           = latest_imu_->angular_velocity;
+        nav_msgs.twist.angular           = latest_imu_->angular_velocity;
         nav_msgs.a                       = latest_imu_->linear_acceleration;
     } else {
         RCLCPP_WARN(this->get_logger(), "No odom or IMU data available");
