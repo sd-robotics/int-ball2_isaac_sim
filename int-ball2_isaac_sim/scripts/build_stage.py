@@ -60,15 +60,17 @@ async def create_scene(env_path: str, robot_path: str):
     print(f"__{robot_name} is onboard!__")
     await omni.kit.app.get_app().next_update_async()
 
+    arti_view = SingleArticulation(intball_prim_path)
+    my_world.scene.add(arti_view)
+    await my_world.reset_async(soft=False)
+
+    await omni.kit.app.get_app().next_update_async()
     add_reference_to_stage(env_path, '/World/ISS_frame')
     
     # Set camera to ISS camera as default
     vp_api = vu.get_active_viewport()
     vp_api.camera_path = '/World/ISS_frame/ISS_Camera'
 
-    arti_view = SingleArticulation(intball_prim_path)
-    my_world.scene.add(arti_view)
-    await my_world.reset_async(soft=False)
 
     print("__WELCOME TO KIBOU ISS!__")
 
