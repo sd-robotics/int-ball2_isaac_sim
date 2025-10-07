@@ -30,7 +30,7 @@ def generate_launch_description():
     ]
 
     asset_path = PathJoinSubstitution([
-        FindPackageShare('int-ball2_isaac_sim'),
+        FindPackageShare('ib2_isaac_sim'),
         'assets',
         LaunchConfiguration('usd_file')
     ])
