@@ -46,6 +46,12 @@ else
     echo "ib2_interfaces directory already exists, skipping clone."
 fi
 
+# Clone ib2 platform repository (guidance control)
+if [ ! -d "int-ball2_platform" ]; then
+    git clone https://github.com/sd-robotics/int-ball2_platform.git
+else
+    echo "int-ball2_platform directory already exists, skipping clone."
+fi
 
 # Install Isaac Sim dependencies
 wget -qO - https://isaac.download.nvidia.com/isaac-ros/repos.key | sudo apt-key add -
