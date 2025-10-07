@@ -39,6 +39,7 @@
     3. [Feedback from ROS Bridge](#feedback-from-ros-bridge)
     4. [Teleoperation (Joy Controller)](#teleoperation-joy-controller)
     5. [ISS Robot Real Data Replaying](#iss-robot-real-data-replaying)
+    6. [Usage of the Guidance Control System](#usage-of-the-guidance-control-system)
 
 5. [**Data Visualization**](#data-visualization)
 
@@ -205,6 +206,54 @@ rosbags-convert --src rosbag_20250421111514.bag --dst-storage sqlite3 --dst ./ro
 ```bash
 ros2 launch ib2_isaac_sim int-ball2_issbag_demo.launch.py bag_file:="<ABSOLUTE/PATH/TO/ROSBAG>"
 ```
+
+### Usage of the Guidance Control System
+
+A part from replaying the data collected, you can also simulate how the Int-Ball2 would move in the actual ISS.
+We have updated the original code from [Int-Ball2 Simulator](https://github.com/jaxa/int-ball2_simulator) so that I can be run in ROS 2 and inside the Isaac Sim simulator.
+
+> [!NOTE]
+> Currently, the control package does not apply errors to the robot attitude as in the original repository where the simulated V-SLAM result is erratic to simulate actual environment positioning errors.
+
+Now let's try this navigation system and move the robot autonomously!
+
+1. Launch the simulation by using the provided launcher.
+```bash
+ros2 launch ib2_isaac_sim int-ball2_isaac_sim.launch.py usd_file:="KIBOU.usd"
+```
+2. Press the “▶” button on the left side of the screen to start the simulator.
+3. Launch the robot positioning system.
+```bash
+ros2 launch ib2_nav nav.launch.py
+```
+4. Launch the robot guidance control system.
+```bash
+ros2 launch ib2_ctl bringup.launch.py
+```
+5. Now, you are ready to control the robot using ROS 2 Action. Before, developing your own action client, you can try the robot guidance system by using this example:
+```bash
+ros2 action send_goal /ctl/command ib2_interfaces/action/CtlCommand "target:
+   header:
+     stamp:
+       sec: 0
+       nanosec: 0
+     frame_id: ''
+   pose:
+     position:
+       x: 0.0
+       y: 0.0
+       z: 0.0
+     orientation:
+       x: 0.0
+       y: 0.0
+       z: 0.0
+       w: 1.0
+ type:
+   type: 40"
+```
+
+> [!TIP]
+> You can move the robot taking as reference the ISS origin (Docking Station) by setting `type: 40` or being the robot itself the point of reference by setting `type: 30` when sending the goal to the action server.
 
 
 ## Data Visualization
