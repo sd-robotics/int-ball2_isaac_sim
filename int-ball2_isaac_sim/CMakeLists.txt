@@ -8,6 +8,9 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(isaac_ros_nitros REQUIRED)
+find_package(int-ball2_control REQUIRED)
+find_package(ib2_data_replay REQUIRED)
+find_package(ib2_nav REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
