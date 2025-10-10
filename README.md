@@ -152,7 +152,7 @@ source install/setup.bash
 Make sure that you have a controller (such as DualShock4) connected to the PC before running the command.
 Then run the teleop launcher.
 ```bash
-ros2 launch int-ball2_control int-ball2_teleop.launch.py
+ros2 launch ib2_control int-ball2_teleop.launch.py
 ```
 
 Operation with the controller is as follows.
@@ -199,7 +199,7 @@ source install/setup.bash
 
 Launch Rviz to visualize the obtained data.
 ```bash
-ros2 launch int-ball2_control rviz_visualize.launch.py 
+ros2 launch ib2_control rviz_visualize.launch.py 
 ```
 
 ![Int-Ball2 Rviz](img/int-ball2_rviz.png)
