@@ -13,7 +13,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
     ####### DATA INPUT ##########
-    package_description = "int-ball2_control"
+    package_description = "ib2_control"
 
     # URDF Configuration
     urdf_file_path = os.path.join(

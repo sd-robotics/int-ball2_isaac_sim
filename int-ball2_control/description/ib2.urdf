@@ -11,13 +11,13 @@ you may not use this file except in compliance with the License. -->
   <link name="body">
     <visual>
       <geometry>
-        <mesh filename="package://int-ball2_control/description/media/meshes/int-ball2/int-ball2.dae" />
+        <mesh filename="package://ib2_control/description/media/meshes/int-ball2/int-ball2.dae" />
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0" />
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://int-ball2_control/description/media/meshes/int-ball2/int-ball2.dae" />
+        <mesh filename="package://ib2_control/description/media/meshes/int-ball2/int-ball2.dae" />
       </geometry>
     </collision>
     <inertial>
