@@ -56,7 +56,7 @@ async def build_stage_async(options):
 
     # Load your USDs
     env_usd_path = os.path.join(script_dir, "..", "assets", "KIBOU_ISS.usd")
-    robot_usd_path = os.path.join(script_dir, "..", "assets", "Intball2", "INTBALL22.usd")
+    robot_usd_path = os.path.join(script_dir, "..", "assets", "Intball2", "INTBALL2.usd")
 
     # Create the scene and get World object
     await create_scene(env_usd_path, robot_usd_path)
