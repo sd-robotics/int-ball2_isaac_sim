@@ -242,14 +242,13 @@ class IsaacSimLauncherNode(Node):
 
             if args.custom_args != "":
                 executable_command += f" {args.custom_args}"
-
             if args.gui != "":
                 script_dir = os.path.dirname(__file__)
                 file_arg = os.path.join(script_dir, "open_isaacsim_stage.py") + f" --path {args.gui} {play_sim_on_start_arg}"
                 executable_command += f" --exec '{file_arg}'"
             else:
                 script_dir = os.path.dirname(__file__)
-                file_arg = os.path.join(script_dir, "create_isaacsim_stage.py") + f" --start-on-play {play_sim_on_start_arg}"
+                file_arg = os.path.join(script_dir, "create_isaacsim_stage.py") + f" {play_sim_on_start_arg}"
                 executable_command = f"{executable_command} --exec '{file_arg}'"
 
             proc = subprocess.Popen(executable_command, shell=True, start_new_session=True)

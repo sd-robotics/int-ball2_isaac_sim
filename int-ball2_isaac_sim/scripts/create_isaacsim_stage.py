@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from requests import options
 import carb
 import argparse
 import omni.usd
@@ -35,39 +34,28 @@ from build_stage import create_scene
 def main():
     parser = argparse.ArgumentParser()
 
-    # Add the --start-on-play option
-    # If --start-on-play is specified, it sets the value to True
-    parser.add_argument('--start-on-play', action='store_true',
-                        help='If present, to true.')
+    parser.add_argument(
+        '--start-on-play',
+        action='store_true',
+        help='Start the simulation automatically after building the stage.'
+    )
 
     try:
-        options = parser.parse_args()
+        args = parser.parse_args()
     except Exception as e:
         carb.log_error(str(e))
         return
 
-    omni.kit.async_engine.run_coroutine(build_stage_async(options))
+    omni.kit.async_engine.run_coroutine(build_stage_async(args))
 
 
-async def build_stage_async(options):
-    timeline_interface = None
-    if options.start_on_play:
-        timeline_interface = omni.timeline.get_timeline_interface()
-
+async def build_stage_async(args):
     # Load your USDs
     env_usd_path = os.path.join(script_dir, "..", "assets", "KIBOU_ISS.usd")
     robot_usd_path = os.path.join(script_dir, "..", "assets", "Intball2", "INTBALL2.usd")
 
     # Create the scene and get World object
-    await create_scene(env_usd_path, robot_usd_path)
-
-    if timeline_interface is not None:
-        await omni.kit.app.get_app().next_update_async()
-        await omni.kit.app.get_app().next_update_async()
-
-        timeline_interface.play()
-        print("Stage loaded and simulation is playing.")
-    pass
+    await create_scene(env_usd_path, robot_usd_path, start_on_play=args.start_on_play)
 
     broken_url = omni.client.break_url(env_usd_path)
     if broken_url.scheme == 'omniverse':

@@ -10,18 +10,15 @@ from isaacsim.core.utils.stage import (
     add_reference_to_stage, create_new_stage_async)
 from isaacsim.core.utils.viewports import set_camera_view
 from isaacsim.core.api import World
-from isaacsim.sensors.physics import IMUSensor
 
 import asyncio
 import os
 import numpy as np
 
-# import rclpy
-# from rclpy.executors import MultiThreadedExecutor
-# from imu_publisher import setup_imu_ros_publishers, imu_sensor_publisher
 
+async def create_scene(env_path: str, robot_path: str, start_on_play: bool=False):
+    timeline_interface = omni.timeline.get_timeline_interface()
 
-async def create_scene(env_path: str, robot_path: str):
     World.clear_instance()
     # Start a fresh stage
     await create_new_stage_async()
@@ -71,6 +68,10 @@ async def create_scene(env_path: str, robot_path: str):
     vp_api = vu.get_active_viewport()
     vp_api.camera_path = '/World/ISS_frame/ISS_Camera'
 
+    if not start_on_play:
+        await omni.kit.app.get_app().next_update_async()
+        await omni.kit.app.get_app().next_update_async()
+        timeline_interface.stop()
 
     print("__WELCOME TO KIBOU ISS!__")
 
