@@ -18,12 +18,6 @@ def generate_launch_description():
         ),
     ]
 
-    kibou_demo_usd = PathJoinSubstitution([
-        FindPackageShare('int-ball2_isaac_sim'),
-        'assets',
-        'KIBOU_ISS_coordinate.usd'
-    ])
-
     int_ball2_isaac_sim_launch_file = PathJoinSubstitution([
         FindPackageShare('ib2_isaac_sim'),
         'launch',
@@ -40,8 +34,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(int_ball2_isaac_sim_launch_file),
         launch_arguments={
             'isaac_sim_version': '4.5.0',
-            'usd_file': kibou_demo_usd,
-            'play_on_start': 'True',
+            'play_sim_on_start': 'True',
         }.items()
     )
 
