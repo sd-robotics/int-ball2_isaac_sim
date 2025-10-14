@@ -68,11 +68,10 @@ async def build_stage_async(args):
             return
 
         server_url = omni.client.make_url(scheme='omniverse', host=broken_url.host)
-        nucleus_connector = get_nucleus_connector()
         nucleus_connector.connect(
             broken_url.host, server_url,
             on_success_fn=lambda *_: print(f"Connected to Nucleus server: {server_url}"),
-            on_failed_fn=lambda *_: carb.log_error(f"Failed to connect to Nucleus: {server_url}")
+            on_failed_fn=lambda *_: carb.log_error(f"Create stage: Failed to connect to Nucleus: {server_url}")
         )
 
 
