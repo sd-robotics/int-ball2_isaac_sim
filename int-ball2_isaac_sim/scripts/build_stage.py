@@ -1,7 +1,5 @@
 from pxr import Gf, Sdf, UsdPhysics
 from omni.usd import get_context
-import omni.client
-import omni.kit.async_engine
 import omni.timeline
 import omni.kit.viewport.utility as vu
 from isaacsim.core.prims import SingleArticulation
@@ -11,9 +9,6 @@ from isaacsim.core.utils.stage import (
 from isaacsim.core.utils.viewports import set_camera_view
 from isaacsim.core.api import World
 
-import asyncio
-import os
-import numpy as np
 
 
 async def create_scene(env_path: str, robot_path: str, start_on_play: bool=False):
