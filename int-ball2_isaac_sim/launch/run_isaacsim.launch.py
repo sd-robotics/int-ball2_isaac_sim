@@ -34,7 +34,7 @@ from launch_ros.substitutions import FindPackageShare
 launch_args = [
     DeclareLaunchArgument('version', default_value='4.5.0', description='Specify the version of Isaac Sim to use. Isaac Sim will be run from default install root folder for the specified version. Leave empty to use latest version of Isaac Sim.'),
     
-    DeclareLaunchArgument('install_path', default_value='', description='If Isaac Sim is insalled in a non-default location, provide a specific path to Isaac Sim installation root folder. (If defined, "version" parameter will be ignored)'),
+    DeclareLaunchArgument('install_path', default_value='', description='If Isaac Sim is installed in a non-default location, provide a specific path to Isaac Sim installation root folder. (If defined, "version" parameter will be ignored)'),
     
     DeclareLaunchArgument('use_internal_libs', default_value='false', description='Set to true if you wish to use internal ROS libraries shipped with Isaac Sim.'),
     
