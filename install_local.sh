@@ -55,20 +55,6 @@ echo "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -c
 sudo apt-get update
 sudo apt-get install -y ros-humble-isaac-ros-nitros
 
-# Setup Isaac Sim launcher repository under src
-cd "$SRC_DIR"
-if [ ! -d "IsaacSim-ros_workspaces" ]; then
-    mkdir IsaacSim-ros_workspaces
-    cd IsaacSim-ros_workspaces
-    git init
-    git remote add origin https://github.com/isaac-sim/IsaacSim-ros_workspaces.git
-    git config core.sparseCheckout true
-    git sparse-checkout set humble_ws/src/isaacsim
-    git pull origin main
-else
-    echo "IsaacSim-ros_workspaces directory already exists, skipping clone."
-fi
-
 # rosdep dependencies
 echo "Install ros2 packages dependencies"
 cd "$WS_DIR"

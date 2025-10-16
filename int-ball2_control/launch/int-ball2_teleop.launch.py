@@ -6,7 +6,7 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
 
-    joy_params = os.path.join(get_package_share_directory('int-ball2_control'), 'config', 'joystick.yaml')
+    joy_params = os.path.join(get_package_share_directory('ib2_control'), 'config', 'joystick.yaml')
 
     joy_node = Node(
             package = 'joy',
@@ -16,7 +16,7 @@ def generate_launch_description():
     )
 
     intball2_vel_joy_node = Node(
-            package = 'int-ball2_control',
+            package = 'ib2_control',
             executable = 'direct_velocity_control.py',
             name = 'ib2_vel_ctrl',
             output = 'screen',
@@ -26,7 +26,7 @@ def generate_launch_description():
     )
     
     intball2_effort_joy_node = Node(
-            package = 'int-ball2_control',
+            package = 'ib2_control',
             executable = 'direct_effort_control.py',
             name = 'ib2_eff_ctrl',
             output = 'screen',

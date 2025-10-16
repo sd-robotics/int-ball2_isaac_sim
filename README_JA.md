@@ -156,7 +156,7 @@ source install/setup.bash
 コマンドを実行する前に、ジョイスティック・コントローラがPCに接続されていることを確認します。
 次にテレオペ (ジョイスティック・コントローラでの操作) のプログラムを起動します。
 ```bash
-ros2 launch int-ball2_control int-ball2_teleop.launch.py
+ros2 launch ib2_control int-ball2_teleop.launch.py
 ```
 
 ジョイスティック・コントローラでの操作は下記のとおりです。
@@ -202,7 +202,7 @@ source install/setup.bash
 
 Rvizを起動します。
 ```bash
-ros2 launch int-ball2_control rviz_visualize.launch.py 
+ros2 launch ib2_control rviz_visualize.launch.py 
 ```
 
 ![Int-Ball2 Rviz](img/int-ball2_rviz.png)
