@@ -181,8 +181,8 @@ hf download --repo-type dataset --local-dir ./ SpaceData/int-ball2_data_on_iss b
 ```
 2. Remember that the actual Int-Ball2 runs on ROS Melodic, then we need to convert the ROSBag so that is playable in ROS2 using [Rosbags](https://gitlab.com/ternaris/rosbags).
 ```bash
-cd bags/
-rosbags-convert --src rosbag_20250421111514.bag --dst-storage sqlite3 --dst ./rosbag2_20250421111514
+cd source/
+python3 convert_rosbag.py ../bags/rosbag_20250421111514.bag ../bags/rosbag2_20250421111514
 ```
 3. Now, lets launch Isaac Sim with the updated ROSBag.
 ```bash

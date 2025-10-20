@@ -184,8 +184,8 @@ hf download --repo-type dataset --local-dir ./ SpaceData/int-ball2_data_on_iss b
 ```
 2. 実機Int-Ball2はROS Melodicで動作しているため、[Rosbags](https://gitlab.com/ternaris/rosbags)を使ってROS2で再生できる形式に変換します。
 ```bash
-cd bags/
-rosbags-convert --src rosbag_20250421111514.bag --dst-storage sqlite3 --dst ./rosbag2_20250421111514
+cd source/
+python3 convert_rosbag.py ../bags/rosbag_20250421111514.bag ../bags/rosbag2_20250421111514
 ```
 3. 変換したROSBagsを使ってIsaac Simを起動します。
 ```bash
