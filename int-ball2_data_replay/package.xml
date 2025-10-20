@@ -10,7 +10,7 @@
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
 
   <depend>ament_cmake_auto</depend>
-  <depend>ib2_msgs</depend>
+  <depend>ib2_interfaces</depend>
   <depend>geometry_msgs</depend>
   <depend>rclcpp</depend>
   <depend>rclcpp_components</depend>

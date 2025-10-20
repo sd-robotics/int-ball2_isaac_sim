@@ -11,7 +11,7 @@
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 
-#include "ib2_msgs/msg/navigation.hpp"
+#include "ib2_interfaces/msg/navigation.hpp"
 #include "int-ball2_data_replay/visibility_control.hpp"
 
 
@@ -27,11 +27,11 @@ public:
   virtual ~BagPoseReplay();
 
 private:
-  void RosBagPoseCallback(const ib2_msgs::msg::Navigation::SharedPtr msg);
+  void RosBagPoseCallback(const ib2_interfaces::msg::Navigation::SharedPtr msg);
   void PublishTwist();
 
   // Subscriber
-  rclcpp::Subscription<ib2_msgs::msg::Navigation>::SharedPtr nav_sub_;
+  rclcpp::Subscription<ib2_interfaces::msg::Navigation>::SharedPtr nav_sub_;
 
   // Publisher
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr twist_pub_;

@@ -12,7 +12,7 @@ BagPoseReplay::BagPoseReplay(const rclcpp::NodeOptions & options)
   msg_received_(false)
 {
   // Subscriber
-  nav_sub_ = this->create_subscription<ib2_msgs::msg::Navigation>(
+  nav_sub_ = this->create_subscription<ib2_interfaces::msg::Navigation>(
     "/sensor_fusion/navigation", 10,
     std::bind(&BagPoseReplay::RosBagPoseCallback, this, std::placeholders::_1));
 
@@ -30,7 +30,7 @@ BagPoseReplay::~BagPoseReplay()
   RCLCPP_INFO(this->get_logger(), "BagPoseReplay node is shutting down.");
 }
 
-void BagPoseReplay::RosBagPoseCallback(const ib2_msgs::msg::Navigation::SharedPtr msg)
+void BagPoseReplay::RosBagPoseCallback(const ib2_interfaces::msg::Navigation::SharedPtr msg)
 {
   Eigen::Vector3d pos(
     msg->pose.pose.position.x,
