@@ -51,10 +51,10 @@ fi
 
 # Clone int-ball2 platform repository
 cd "$SRC_DIR"
-if [ ! -d "int-ball2_platform" ]; then
-    git clone https://github.com/sd-robotics/int-ball2_platform.git
+if [ ! -d "ib2_platform" ]; then
+    git clone https://github.com/sd-robotics/ib2_platform.git
 else
-    echo "int-ball2_platform directory already exists, skipping clone."
+    echo "ib2_platform directory already exists, skipping clone."
 fi
 
 # Install Isaac Sim dependencies
