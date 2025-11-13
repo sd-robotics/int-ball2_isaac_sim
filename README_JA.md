@@ -180,7 +180,7 @@ SpaceDataは、ISS上の実機Int-Ball2のデータを収集する機会を得�
 ```bash
 cd ~/int-ball2_ws/src/int-ball2_isaac_sim/int-ball2_data_replay/
 # ダウンロードしたいROSBagsを選択してください
-huggingface-cli download --repo-type dataset --local-dir ./ SpaceData/int-ball2_data_on_iss bags/rosbag_20250421111514.bag
+hf download --repo-type dataset --local-dir ./ SpaceData/int-ball2_data_on_iss bags/rosbag_20250421111514.bag
 ```
 2. 実機Int-Ball2はROS Melodicで動作しているため、[Rosbags](https://gitlab.com/ternaris/rosbags)を使ってROS2で再生できる形式に変換します。
 ```bash

@@ -23,7 +23,7 @@ PKG_DIR=$(pwd)                                 # .../intball2_ws/src/int-ball2_i
 SRC_DIR=$(dirname "$PKG_DIR")                  # .../intball2_ws/src
 WS_DIR=$(realpath "$SRC_DIR/..")               # .../intball2_ws
 
-cd "$PKG_DIR"
+cd $PKG_DIR/int-ball2_isaac_sim
 
 # Download the folder as a ZIP file
 echo "Starting download of assets..."

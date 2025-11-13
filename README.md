@@ -177,7 +177,7 @@ Those ROSBags are publicily available in [HuggingFace](https://huggingface.co/da
 ```bash
 cd ~/int-ball2_ws/src/int-ball2_isaac_sim/int-ball2_data_replay/
 # Choose the ROSbag you want to download
-huggingface-cli download --repo-type dataset --local-dir ./ SpaceData/int-ball2_data_on_iss bags/rosbag_20250421111514.bag
+hf download --repo-type dataset --local-dir ./ SpaceData/int-ball2_data_on_iss bags/rosbag_20250421111514.bag
 ```
 2. Remember that the actual Int-Ball2 runs on ROS Melodic, then we need to convert the ROSBag so that is playable in ROS2 using [Rosbags](https://gitlab.com/ternaris/rosbags).
 ```bash
