@@ -232,7 +232,7 @@ ros2 launch ib2_ctl bringup.launch.py
 ```
 5. Now, you are ready to control the robot using ROS 2 Action. Before, developing your own action client, you can try the robot guidance system by using this example:
 ```bash
-ros2 action send_goal /ctl/command ib2_interfaces/action/CtlCommand "target:
+ros2 action send_goal /ctl/command ib2_msgs/action/CtlCommand "target:
    header:
      stamp:
        sec: 0

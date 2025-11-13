@@ -38,21 +38,21 @@ ib2::Nav::Nav(const rclcpp::NodeOptions& options = rclcpp::NodeOptions()) :
     openCSVFile();
 
     // Create a Navigation topic, and publish it.
-    pub_nav_                   = this->create_publisher<ib2_interfaces::msg::Navigation>(
+    pub_nav_                   = this->create_publisher<ib2_msgs::msg::Navigation>(
         "/sensor_fusion/navigation", 1);
-    pub_sensor_fusion_status_  = this->create_publisher<ib2_interfaces::msg::NavigationStatus>(
+    pub_sensor_fusion_status_  = this->create_publisher<ib2_msgs::msg::NavigationStatus>(
         "/sensor_fusion/navigation_status", 1);
 
     // Create a Attitude topic, and publish it.
-    pub_att_                   = this->create_publisher<ib2_interfaces::msg::Attitude>(
+    pub_att_                   = this->create_publisher<ib2_msgs::msg::Attitude>(
         "/nav/attitude", 1);
 
     // Create a True Navigation topic, and publish it.
-    pub_true_nav_              = this->create_publisher<ib2_interfaces::msg::Navigation>(
+    pub_true_nav_              = this->create_publisher<ib2_msgs::msg::Navigation>(
         "/nav/true/navigation", 1);
 
     // Create a True Attitude topic, and publish it.
-    pub_true_att_              = this->create_publisher<ib2_interfaces::msg::Attitude>(
+    pub_true_att_              = this->create_publisher<ib2_msgs::msg::Attitude>(
         "/nav/true/attitude", 1);
 
     // Subscribers
@@ -66,15 +66,15 @@ ib2::Nav::Nav(const rclcpp::NodeOptions& options = rclcpp::NodeOptions()) :
         "/nav/time_offset", 5, std::bind(&ib2::Nav::offsetCallback, this, std::placeholders::_1));  // CHECK: publisher existence
 
     // Nav Parameter Update Server
-    nav_param_server_         = this->create_service<ib2_interfaces::srv::UpdateParameter>(
+    nav_param_server_         = this->create_service<ib2_msgs::srv::UpdateParameter>(
         "/sim/nav/update_params", std::bind(&ib2::Nav::updateParameter, this, std::placeholders::_1, std::placeholders::_2));
 
     // Nav Marker Correction Server
-    marker_correction_server_ = this->create_service<ib2_interfaces::srv::MarkerCorrection>(
+    marker_correction_server_ = this->create_service<ib2_msgs::srv::MarkerCorrection>(
         "/sensor_fusion/marker_correction", std::bind(&ib2::Nav::markerCorrection, this, std::placeholders::_1, std::placeholders::_2));
 
     // Nav ON/OFF Service Server
-    switch_power_server_      = this->create_service<ib2_interfaces::srv::SwitchPower>(
+    switch_power_server_      = this->create_service<ib2_msgs::srv::SwitchPower>(
         "/nav/switch_power", std::bind(&ib2::Nav::switchPower, this, std::placeholders::_1, std::placeholders::_2));
 
     // Nav ON/OFF Action Server
@@ -100,8 +100,8 @@ ib2::Nav::Nav(const rclcpp::NodeOptions& options = rclcpp::NodeOptions()) :
 
     // Initialize state
     status_      = initial_nav_on_ ?
-        ib2_interfaces::msg::NavigationStatus::NAV_FUSION :
-        ib2_interfaces::msg::NavigationStatus::NAV_OFF;
+        ib2_msgs::msg::NavigationStatus::NAV_FUSION :
+        ib2_msgs::msg::NavigationStatus::NAV_OFF;
     invalid_nav_ = false;
     has_prev_    = false;
 
@@ -122,7 +122,7 @@ ib2::Nav::~Nav()
 void ib2::Nav::navCallBack()
 {
     // Get True Navigation in docking station coordination frame
-    ib2_interfaces::msg::Navigation nav_msgs_h = getTrueNavigation();
+    ib2_msgs::msg::Navigation nav_msgs_h = getTrueNavigation();
 
 
     // Extract current position and time
@@ -132,7 +132,7 @@ void ib2::Nav::navCallBack()
 
     // Transform World Coordination to Home Coordination
     // Not needed as we are already in the home (DS) coordination frame
-    // ib2_interfaces::msg::Navigation nav_msgs_h = transformWtoH(nav_msgs_w);
+    // ib2_msgs::msg::Navigation nav_msgs_h = transformWtoH(nav_msgs_w);
 
     // TODO: Isaac Sim 4.5.0 does not support getVelocity function yet.
     // Therefore, we calculate velocity from position and time difference.
@@ -213,7 +213,7 @@ void ib2::Nav::navCallBack()
 void ib2::Nav::sensorFusionStatusCallBack()
 {
     // Publish Navigation Status Message
-    ib2_interfaces::msg::NavigationStatus sensor_fusion_status;
+    ib2_msgs::msg::NavigationStatus sensor_fusion_status;
     sensor_fusion_status.status = status_;
     sensor_fusion_status.marker = false;
     pub_sensor_fusion_status_->publish(sensor_fusion_status);
@@ -269,9 +269,9 @@ void ib2::Nav::offsetCallback(const example_interfaces::msg::Float64::SharedPtr 
 
 //------------------------------------------------------------------------------
 // ロボットの航法値真値を取得する
-ib2_interfaces::msg::Navigation ib2::Nav::getTrueNavigation()
+ib2_msgs::msg::Navigation ib2::Nav::getTrueNavigation()
 {
-    ib2_interfaces::msg::Navigation nav_msgs;
+    ib2_msgs::msg::Navigation nav_msgs;
     nav_msgs.pose.header.stamp       = this->now() + tnav_offset_;
     nav_msgs.pose.header.frame_id    = FRAME_ISS;
     nav_msgs.status.status           = status_;
@@ -296,9 +296,9 @@ ib2_interfaces::msg::Navigation ib2::Nav::getTrueNavigation()
 
 //------------------------------------------------------------------------------
 // World(慣性)座標系からドッキングステーション(ホーム)座標系への座標変換
-ib2_interfaces::msg::Navigation ib2::Nav::transformWtoH(const ib2_interfaces::msg::Navigation& nav_msgs)
+ib2_msgs::msg::Navigation ib2::Nav::transformWtoH(const ib2_msgs::msg::Navigation& nav_msgs)
 {
-    ib2_interfaces::msg::Navigation nav_msgs_h = nav_msgs;
+    ib2_msgs::msg::Navigation nav_msgs_h = nav_msgs;
 
     // If odom is already in docking station frame, this may be an identity transform
     try {
@@ -524,18 +524,18 @@ int ib2::Nav::getParameter()
 //------------------------------------------------------------------------------
 // ROS Parameter Serverからパラメータを取得
 bool ib2::Nav::updateParameter(
-    const std::shared_ptr<ib2_interfaces::srv::UpdateParameter::Request> req,
-    std::shared_ptr<ib2_interfaces::srv::UpdateParameter::Response> res)
+    const std::shared_ptr<ib2_msgs::srv::UpdateParameter::Request> req,
+    std::shared_ptr<ib2_msgs::srv::UpdateParameter::Response> res)
 {
     RCLCPP_INFO(this->get_logger(), "Updating parameters");
 
     if (getParameter())
     {
         RCLCPP_INFO(this->get_logger(), "Successfully updated parameters");
-        res->status = ib2_interfaces::srv::UpdateParameter::Response::SUCCESS;
+        res->status = ib2_msgs::srv::UpdateParameter::Response::SUCCESS;
     } else {
         RCLCPP_ERROR(this->get_logger(), "Failed to update parameters");
-        res->status = ib2_interfaces::srv::UpdateParameter::Response::FAILURE_UPDATE;
+        res->status = ib2_msgs::srv::UpdateParameter::Response::FAILURE_UPDATE;
     }
 
     if(error_source_csv_)
@@ -551,35 +551,35 @@ bool ib2::Nav::updateParameter(
 //------------------------------------------------------------------------------
 // ROS Parameter Serverからパラメータを取得
 bool ib2::Nav::markerCorrection(
-    const std::shared_ptr<ib2_interfaces::srv::MarkerCorrection::Request> req,
-    std::shared_ptr<ib2_interfaces::srv::MarkerCorrection::Response> res)
+    const std::shared_ptr<ib2_msgs::srv::MarkerCorrection::Request> req,
+    std::shared_ptr<ib2_msgs::srv::MarkerCorrection::Response> res)
 {
     res->stamp = this->now(); // CHECK: req might be updated, but srv is blank
     res->status = marker_ > 0 ?
-        ib2_interfaces::srv::MarkerCorrection::Response::SUCCESS :
-        ib2_interfaces::srv::MarkerCorrection::Response::FAILURE_UPDATE;
+        ib2_msgs::srv::MarkerCorrection::Response::SUCCESS :
+        ib2_msgs::srv::MarkerCorrection::Response::FAILURE_UPDATE;
     return true;
 }
 
 //------------------------------------------------------------------------------
 // Nav ON/OFF ServerからON/OFFコマンドを取得
 bool ib2::Nav::switchPower(
-        const std::shared_ptr<ib2_interfaces::srv::SwitchPower::Request> req,
-        std::shared_ptr<ib2_interfaces::srv::SwitchPower::Response> res)
+        const std::shared_ptr<ib2_msgs::srv::SwitchPower::Request> req,
+        std::shared_ptr<ib2_msgs::srv::SwitchPower::Response> res)
 {
-    if((status_ == ib2_interfaces::msg::NavigationStatus::NAV_OFF    && req->power.status == ib2_interfaces::msg::PowerStatus::OFF) || 
-       (status_ == ib2_interfaces::msg::NavigationStatus::NAV_FUSION && req->power.status == ib2_interfaces::msg::PowerStatus::ON))
+    if((status_ == ib2_msgs::msg::NavigationStatus::NAV_OFF    && req->power.status == ib2_msgs::msg::PowerStatus::OFF) || 
+       (status_ == ib2_msgs::msg::NavigationStatus::NAV_FUSION && req->power.status == ib2_msgs::msg::PowerStatus::ON))
     {
         // ステータス変更無し
         res->current_power.status = req->power.status;
         return true;
     }
 
-    if(req->power.status == ib2_interfaces::msg::PowerStatus::OFF)
+    if(req->power.status == ib2_msgs::msg::PowerStatus::OFF)
     {
         timer_->cancel();
-        status_                   = ib2_interfaces::msg::NavigationStatus::NAV_OFF;
-        res->current_power.status = ib2_interfaces::msg::PowerStatus::OFF;
+        status_                   = ib2_msgs::msg::NavigationStatus::NAV_OFF;
+        res->current_power.status = ib2_msgs::msg::PowerStatus::OFF;
 
         while(!nav_buffer_.empty())
         {
@@ -591,10 +591,10 @@ bool ib2::Nav::switchPower(
 
     timer_->reset();
 
-    if(status_ == ib2_interfaces::msg::NavigationStatus::NAV_OFF)
+    if(status_ == ib2_msgs::msg::NavigationStatus::NAV_OFF)
     {
-        status_                   = ib2_interfaces::msg::NavigationStatus::NAV_FUSION;
-        res->current_power.status = ib2_interfaces::msg::PowerStatus::ON;
+        status_                   = ib2_msgs::msg::NavigationStatus::NAV_FUSION;
+        res->current_power.status = ib2_msgs::msg::PowerStatus::ON;
     }
 
     return true;
@@ -605,14 +605,14 @@ void ib2::Nav::navigationStartUpCallback(
     const std::shared_ptr<GoalHandleNavigationStartUp> goal_handle)
 {
     auto goal = goal_handle->get_goal();
-    ib2_interfaces::action::NavigationStartUp::Result::SharedPtr result = std::make_shared<ib2_interfaces::action::NavigationStartUp::Result>();
+    ib2_msgs::action::NavigationStartUp::Result::SharedPtr result = std::make_shared<ib2_msgs::action::NavigationStartUp::Result>();
 
-    if(goal->command == ib2_interfaces::action::NavigationStartUp::Goal::ON)
+    if(goal->command == ib2_msgs::action::NavigationStartUp::Goal::ON)
     {
         // SwitchPower: ON
-        ib2_interfaces::srv::SwitchPower::Request::SharedPtr switch_power_request = std::make_shared<ib2_interfaces::srv::SwitchPower::Request>();
-        switch_power_request->power.status = ib2_interfaces::msg::PowerStatus::ON;
-        ib2_interfaces::srv::SwitchPower::Response::SharedPtr switch_power_response = std::make_shared<ib2_interfaces::srv::SwitchPower::Response>();
+        ib2_msgs::srv::SwitchPower::Request::SharedPtr switch_power_request = std::make_shared<ib2_msgs::srv::SwitchPower::Request>();
+        switch_power_request->power.status = ib2_msgs::msg::PowerStatus::ON;
+        ib2_msgs::srv::SwitchPower::Response::SharedPtr switch_power_response = std::make_shared<ib2_msgs::srv::SwitchPower::Response>();
         switchPower(switch_power_request, switch_power_response);
 
         // auto sleep_second = ignition::math::Rand::DblUniform(1.0, 2.5);
@@ -622,15 +622,15 @@ void ib2::Nav::navigationStartUpCallback(
 
         // Response result
         result->stamp = this->now();
-        result->type = ib2_interfaces::action::NavigationStartUp::Result::ON_READY;
+        result->type = ib2_msgs::action::NavigationStartUp::Result::ON_READY;
         goal_handle->succeed(result);
     }
-    else if(goal->command == ib2_interfaces::action::NavigationStartUp::Goal::OFF)
+    else if(goal->command == ib2_msgs::action::NavigationStartUp::Goal::OFF)
     {
         // SwitchPower: OFF
-        ib2_interfaces::srv::SwitchPower::Request::SharedPtr switch_power_request = std::make_shared<ib2_interfaces::srv::SwitchPower::Request>();
-        switch_power_request->power.status = ib2_interfaces::msg::PowerStatus::OFF;
-        ib2_interfaces::srv::SwitchPower::Response::SharedPtr switch_power_response = std::make_shared<ib2_interfaces::srv::SwitchPower::Response>();
+        ib2_msgs::srv::SwitchPower::Request::SharedPtr switch_power_request = std::make_shared<ib2_msgs::srv::SwitchPower::Request>();
+        switch_power_request->power.status = ib2_msgs::msg::PowerStatus::OFF;
+        ib2_msgs::srv::SwitchPower::Response::SharedPtr switch_power_response = std::make_shared<ib2_msgs::srv::SwitchPower::Response>();
         switchPower(switch_power_request, switch_power_response);
 
         // auto sleep_second = ignition::math::Rand::DblUniform(0.5, 1.5);
@@ -640,14 +640,14 @@ void ib2::Nav::navigationStartUpCallback(
 
         // Response result
         result->stamp = this->now();
-        result->type = ib2_interfaces::action::NavigationStartUp::Result::OFF;
+        result->type = ib2_msgs::action::NavigationStartUp::Result::OFF;
         goal_handle->succeed(result);
     }
     else
     {
         // Response result (ABORTED)
         result->stamp = this->now();
-        result->type = ib2_interfaces::action::NavigationStartUp::Result::ABORTED;
+        result->type = ib2_msgs::action::NavigationStartUp::Result::ABORTED;
         goal_handle->succeed(result);  // CHECK
         // goal_handle->abort(result);
     }
@@ -655,9 +655,9 @@ void ib2::Nav::navigationStartUpCallback(
 
 //------------------------------------------------------------------------------
 // 航法値に誤差を付加する
-ib2_interfaces::msg::Navigation ib2::Nav::addError(const ib2_interfaces::msg::Navigation& nav_msgs)
+ib2_msgs::msg::Navigation ib2::Nav::addError(const ib2_msgs::msg::Navigation& nav_msgs)
 {
-    ib2_interfaces::msg::Navigation nav_msgs_e = nav_msgs;
+    ib2_msgs::msg::Navigation nav_msgs_e = nav_msgs;
     ib2::Nav::NavError              nav_error  = getNavError();
 
     // Add noise
@@ -704,10 +704,10 @@ double ib2::Nav::controlFreqFluctuation()
 
 //------------------------------------------------------------------------------
 // NavigationメッセージからAttitudeメッセージを作成する
-ib2_interfaces::msg::Attitude ib2::Nav::makeAttMsgFromNavMsg(const ib2_interfaces::msg::Navigation& nav_msgs)
+ib2_msgs::msg::Attitude ib2::Nav::makeAttMsgFromNavMsg(const ib2_msgs::msg::Navigation& nav_msgs)
 {
     // Make Attitude Message
-    ib2_interfaces::msg::Attitude att_msgs;
+    ib2_msgs::msg::Attitude att_msgs;
     att_msgs.stamp = nav_msgs.pose.header.stamp;
     att_msgs.q     = nav_msgs.pose.pose.orientation;
     att_msgs.w.x   = nav_msgs.twist.angular.x * RAD2DEG;

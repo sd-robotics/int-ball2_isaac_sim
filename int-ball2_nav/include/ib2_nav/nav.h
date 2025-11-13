@@ -25,13 +25,13 @@
 #include <example_interfaces/msg/int32.hpp>
 #include <example_interfaces/msg/float64.hpp>
 
-#include "ib2_interfaces/msg/attitude.hpp"
-#include "ib2_interfaces/msg/navigation.hpp"
-#include "ib2_interfaces/msg/navigation_status.hpp"
-#include "ib2_interfaces/action/navigation_start_up.hpp"
-#include "ib2_interfaces/srv/marker_correction.hpp"
-#include "ib2_interfaces/srv/switch_power.hpp"
-#include "ib2_interfaces/srv/update_parameter.hpp"
+#include "ib2_msgs/msg/attitude.hpp"
+#include "ib2_msgs/msg/navigation.hpp"
+#include "ib2_msgs/msg/navigation_status.hpp"
+#include "ib2_msgs/action/navigation_start_up.hpp"
+#include "ib2_msgs/srv/marker_correction.hpp"
+#include "ib2_msgs/srv/switch_power.hpp"
+#include "ib2_msgs/srv/update_parameter.hpp"
 
 #include <chrono>
 #include <fstream>
@@ -50,7 +50,7 @@ class Nav : public rclcpp::Node
     // コンストラクタ/デストラクタ
 public:
 
-    using NavigationStartUp = ib2_interfaces::action::NavigationStartUp;
+    using NavigationStartUp = ib2_msgs::action::NavigationStartUp;
     using GoalHandleNavigationStartUp = rclcpp_action::ServerGoalHandle<NavigationStartUp>;
 
     /** デフォルトコンストラクタ */
@@ -116,8 +116,8 @@ private:
     * @retval                     false    更新失敗
     */
     bool updateParameter(
-        const std::shared_ptr<ib2_interfaces::srv::UpdateParameter::Request> req,
-        std::shared_ptr<ib2_interfaces::srv::UpdateParameter::Response> res
+        const std::shared_ptr<ib2_msgs::srv::UpdateParameter::Request> req,
+        std::shared_ptr<ib2_msgs::srv::UpdateParameter::Response> res
     );
 
     /** マーカー補正
@@ -127,8 +127,8 @@ private:
      * @retval                     false    更新失敗
      */
     bool markerCorrection(
-        const std::shared_ptr<ib2_interfaces::srv::MarkerCorrection::Request> req,
-        std::shared_ptr<ib2_interfaces::srv::MarkerCorrection::Response> res
+        const std::shared_ptr<ib2_msgs::srv::MarkerCorrection::Request> req,
+        std::shared_ptr<ib2_msgs::srv::MarkerCorrection::Response> res
     );
 
     /** Nav ON/OFF
@@ -138,8 +138,8 @@ private:
     * @retval                     false            設定失敗
     */
     bool switchPower(
-        const std::shared_ptr<ib2_interfaces::srv::SwitchPower::Request> req,
-        std::shared_ptr<ib2_interfaces::srv::SwitchPower::Response> res
+        const std::shared_ptr<ib2_msgs::srv::SwitchPower::Request> req,
+        std::shared_ptr<ib2_msgs::srv::SwitchPower::Response> res
     );
     
     /** 航法誤差CSVファイルオープン */
@@ -171,21 +171,21 @@ private:
     void offsetCallback(const example_interfaces::msg::Float64::SharedPtr offset);
 
     /** ロボットの航法値真値を取得する
-     * @return ib2_interfaces::msg::Navigation 航法値メッセージ
+     * @return ib2_msgs::msg::Navigation 航法値メッセージ
      */
-    ib2_interfaces::msg::Navigation getTrueNavigation();
+    ib2_msgs::msg::Navigation getTrueNavigation();
 
     /** World(慣性)座標系からホーム座標系への座標変換
      * @param [in, out] nav_msgs 航法値メッセージへの参照
-     * @return ib2_interfaces::msg::Navigation 航法値メッセージ
+     * @return ib2_msgs::msg::Navigation 航法値メッセージ
      */
-    ib2_interfaces::msg::Navigation transformWtoH(const ib2_interfaces::msg::Navigation& nav_msgs);
+    ib2_msgs::msg::Navigation transformWtoH(const ib2_msgs::msg::Navigation& nav_msgs);
 
     /** 航法値に誤差を付加する
      * @param [in, out] nav_msgs 航法値メッセージへの参照
-     * @return ib2_interfaces::msg::Navigation 誤差込み航法値メッセージ
+     * @return ib2_msgs::msg::Navigation 誤差込み航法値メッセージ
      */
-    ib2_interfaces::msg::Navigation addError(const ib2_interfaces::msg::Navigation& nav_msgs);
+    ib2_msgs::msg::Navigation addError(const ib2_msgs::msg::Navigation& nav_msgs);
 
     /** 制御周期の変動を模擬する
      * @return double 変動込み制御周期[s]
@@ -194,9 +194,9 @@ private:
 
     /** NavigationメッセージからAttitudeメッセージを作成する
      * @param [in] nav_msgs       航法値メッセージへの参照
-     * @return ib2_interfaces::msg::Attitude 姿勢情報メッセージ
+     * @return ib2_msgs::msg::Attitude 姿勢情報メッセージ
      */
-    ib2_interfaces::msg::Attitude makeAttMsgFromNavMsg(const ib2_interfaces::msg::Navigation& nav_msgs);
+    ib2_msgs::msg::Attitude makeAttMsgFromNavMsg(const ib2_msgs::msg::Navigation& nav_msgs);
 
     /** 加速度、角加速度の加算（Gazeboのコールバック関数） */
     // void sumAcclAndAttRate();
@@ -243,19 +243,19 @@ private:
     tf2_ros::TransformListener      tf_listener_;
 
     /** 航法値(誤差込)のパブリッシャ */
-    rclcpp::Publisher<ib2_interfaces::msg::Navigation>::SharedPtr       pub_nav_;
+    rclcpp::Publisher<ib2_msgs::msg::Navigation>::SharedPtr       pub_nav_;
 
     /** 航法機能ステータスのパブリッシャ（実機固有インタフェースの模擬） */
-    rclcpp::Publisher<ib2_interfaces::msg::NavigationStatus>::SharedPtr pub_sensor_fusion_status_;
+    rclcpp::Publisher<ib2_msgs::msg::NavigationStatus>::SharedPtr pub_sensor_fusion_status_;
 
     /** 姿勢状態量(誤差込)のパブリッシャ */
-    rclcpp::Publisher<ib2_interfaces::msg::Attitude>::SharedPtr         pub_att_;
+    rclcpp::Publisher<ib2_msgs::msg::Attitude>::SharedPtr         pub_att_;
 
     /** 航法値真値のパブリッシャ */
-    rclcpp::Publisher<ib2_interfaces::msg::Navigation>::SharedPtr       pub_true_nav_;
+    rclcpp::Publisher<ib2_msgs::msg::Navigation>::SharedPtr       pub_true_nav_;
 
     /** 姿勢状態量真値のパブリッシャ */
-    rclcpp::Publisher<ib2_interfaces::msg::Attitude>::SharedPtr         pub_true_att_;
+    rclcpp::Publisher<ib2_msgs::msg::Attitude>::SharedPtr         pub_true_att_;
 
     /** 航法オドメトリのサブスクライバ */
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr            sub_odom_;
@@ -270,13 +270,13 @@ private:
     rclcpp::Subscription<example_interfaces::msg::Float64>::SharedPtr   sub_time_offset_;
 
     /** 航法プラグインパラメータ更新サービスサーバ */
-    rclcpp::Service<ib2_interfaces::srv::UpdateParameter>::SharedPtr    nav_param_server_;
+    rclcpp::Service<ib2_msgs::srv::UpdateParameter>::SharedPtr    nav_param_server_;
 
     /** マーカー補正サービスサーバ */
-    rclcpp::Service<ib2_interfaces::srv::MarkerCorrection>::SharedPtr   marker_correction_server_;
+    rclcpp::Service<ib2_msgs::srv::MarkerCorrection>::SharedPtr   marker_correction_server_;
 
     /** Nav ON/OFFサービスサーバ */
-    rclcpp::Service<ib2_interfaces::srv::SwitchPower>::SharedPtr        switch_power_server_;
+    rclcpp::Service<ib2_msgs::srv::SwitchPower>::SharedPtr        switch_power_server_;
 
     /** タイマコールバックグループ */
     rclcpp::CallbackGroup::SharedPtr timer_group_;
@@ -291,7 +291,7 @@ private:
     rclcpp_action::Server<NavigationStartUp>::SharedPtr navigation_start_up_;
 
     /** 航法メッセージバッファ */
-    std::queue<ib2_interfaces::msg::Navigation> nav_buffer_;
+    std::queue<ib2_msgs::msg::Navigation> nav_buffer_;
 
     /** 最新のオドメトリメッセージ */
     nav_msgs::msg::Odometry::SharedPtr latest_odom_;

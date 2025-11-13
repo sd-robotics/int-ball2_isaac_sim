@@ -23,7 +23,7 @@ find_package(nav_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(example_interfaces REQUIRED)
-find_package(ib2_interfaces REQUIRED)
+find_package(ib2_msgs REQUIRED)
 
 
 ###########
@@ -55,7 +55,7 @@ ament_target_dependencies(${PROJECT_NAME}
   "sensor_msgs"
   "geometry_msgs"
   "example_interfaces"
-  "ib2_interfaces"
+  "ib2_msgs"
 )
 
 #############

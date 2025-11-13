@@ -232,7 +232,7 @@ ros2 launch ib2_ctl bringup.launch.py
 ```
 5. これで、ROS 2 Actionを使ってロボットを制御する準備ができました。独自のアクションクライアントを開発する前に、以下の例を使ってロボット誘導システムを試すことができます。
 ```bash
-ros2 action send_goal /ctl/command ib2_interfaces/action/CtlCommand "target:
+ros2 action send_goal /ctl/command ib2_msgs/action/CtlCommand "target:
   header:
     stamp:
      sec: 0

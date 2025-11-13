@@ -40,10 +40,10 @@ echo "Download complete!"
 cd "$CRT_DIR"
 
 # Clone ib2 interface repository
-if [ ! -d "ib2_interfaces" ]; then
-    git clone git@github.com:sd-robotics/ib2_interfaces.git
+if [ ! -d "ib2_msgs" ]; then
+    git clone git@github.com:sd-robotics/ib2_msgs.git
 else
-    echo "ib2_interfaces directory already exists, skipping clone."
+    echo "ib2_msgs directory already exists, skipping clone."
 fi
 
 # Clone ib2 platform repository (guidance control)
