@@ -34,6 +34,7 @@
     3. [ROS Bridgeによるデータ取得](#ros-bridgeによるデータ取得)
     4. [遠隔操作 (ジョイコントローラ)](#遠隔操作-ジョイコントローラ)
     5. [ISS上の実機データの再生](#ISS上の実機データの再生)
+    6. [追従制御の実行方法](#追従制御の実行方法)
 
 5. [**データの可視化**](#データの可視化)
 
@@ -192,6 +193,53 @@ rosbags-convert --src rosbag_20250421111514.bag --dst-storage sqlite3 --dst ./ro
 ros2 launch ib2_isaac_sim int-ball2_issbag_demo.launch.py bag_file:="<ABSOLUTE/PATH/TO/ROSBAG>"
 ```
 
+### 追従制御の実行方法
+
+ISS上で収集したデータを再生するだけでなく、Int-Ball2が実際のISS内でどのように移動するかをシミュレーションすることもできます。
+[Int-Ball2 Simulator](https://github.com/jaxa/int-ball2_simulator) のオリジナルコードをROS 2およびIsaac Simシミュレータ内で動作するように更新しました。
+
+> [!NOTE]
+> 現在、制御パッケージでは、元のリポジトリのようにロボットの位置や姿勢に誤差（V-SLAMの結果が実環境の位置誤差を模擬して不安定になる挙動）は適用されていません。
+
+それでは、このシステムを試して、ロボットを自律移動させてみましょう！
+
+1. 提供されているlaunchファイルでシミュレーションを起動します。
+```bash
+ros2 launch ib2_isaac_sim int-ball2_isaac_sim.launch.py usd_file:="KIBOU.usd"
+```
+2. 画面左側の「▶」ボタンを押してシミュレータを開始します。
+3. ロボットの位置推定システムを起動します。
+```bash
+ros2 launch ib2_nav nav.launch.py
+```
+4. ロボットの誘導制御システムを起動します。
+```bash
+ros2 launch ib2_ctl bringup.launch.py
+```
+5. これで、ROS 2 Actionを使ってロボットを制御する準備ができました。独自のアクションクライアントを開発する前に、以下の例を使ってロボット誘導システムを試すことができます。
+```bash
+ros2 action send_goal /ctl/command ib2_msgs/action/CtlCommand "target:
+  header:
+    stamp:
+     sec: 0
+     nanosec: 0
+    frame_id: ''
+  pose:
+    position:
+     x: 0.0
+     y: 0.0
+     z: 0.0
+    orientation:
+     x: 0.0
+     y: 0.0
+     z: 0.0
+     w: 1.0
+ type:
+  type: 40"
+```
+
+> [!TIP]
+> ゴール送信時に`type: 40`を指定するとISS原点（ドッキングステーション）を基準に、`type: 30`を指定するとロボット自身を基準に移動させることができます。
 
 ## データの可視化
 ワークスペースをソースします。

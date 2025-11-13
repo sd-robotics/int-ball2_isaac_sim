@@ -19,7 +19,7 @@ def generate_launch_description():
     ]
 
     kibou_demo_usd = PathJoinSubstitution([
-        FindPackageShare('int-ball2_isaac_sim'),
+        FindPackageShare('ib2_isaac_sim'),
         'assets',
         'KIBOU_ISS_coordinate.usd'
     ])

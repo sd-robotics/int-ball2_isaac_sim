@@ -1,0 +1,70 @@
+/**:
+  ros__parameters :
+    nav_parameter :
+      add_error : true
+      error :
+        # Error Source (true : csv  false : random)
+        error_source_csv : false
+        # if error_source_csv = true  nav error will be added baset on CSV File
+        csv : "config/nav_error.csv"
+        #csv : ""
+        # if error_source_csv = false nav error will be added based on the below parameter
+        pos :
+          mean : 
+            x : -0.0021
+            y : -0.0018
+            z : -0.000067304 # [m]
+          stddev : 
+            x : 0.00084609
+            y : 0.00085207
+            z : 0.00017358 # [m]
+        vel :
+          mean : 
+            x : -0.0056
+            y : -0.0043
+            z : 0.00023766 # [m/s]
+          stddev : 
+            x : 0.0018
+            y : 0.0013
+            z : 0.00041765 # [m/s]
+        acc :
+          mean :
+            x : 0.0089
+            y : -0.0069
+            z : -0.0032 # [m/s^2]
+          stddev    :
+            x : 0.03
+            y : 0.0256
+            z : 0.0367 # [m/s^2]
+        att :
+          mean :
+            x : 0.0032
+            y : -0.007
+            z : -0.0049 # [deg]
+          stddev :
+            x : 0.0103
+            y : 0.0107
+            z : 0.0062 # [deg]
+        att_rate :
+          mean :
+            x : 0.01
+            y : 0.0051
+            z : -0.0312 # [deg/s]
+          stddev :
+            x : 0.0092
+            y : 0.0221
+            z : 0.0116 # [deg/s]
+      control : 
+        # Control Frequency Fluctuation
+        #    f =    A   * sin(      w         * t) + WhiteGaussian
+        #        <gain> * sin((2*PI * <freq>) * t) + WhiteGaussian(<mean>, <stddev>)
+        #
+        #        (*) mean value of "WhiteGaussian" is Nominal Control Frequency
+        mean   : 200.0  # [Hz]
+        stddev :   0.0  # [Hz]
+        gain   :   0.0  # [-]
+        freq   :   0.0  # [Hz]
+      
+      delay   : 0.1  # [s]
+      marker  : 1    # positive : success / not positive : failure
+      initial_nav_on : true # initial state of navigation. (true=NAV_FUSION, false=NAV_OFF)

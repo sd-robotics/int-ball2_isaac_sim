@@ -42,10 +42,10 @@ echo "Download complete!"
 
 # Clone ib2 interface repository
 cd "$SRC_DIR"
-if [ ! -d "ib2_interfaces" ]; then
-    git clone https://github.com/sd-robotics/ib2_interfaces.git
+if [ ! -d "ib2_msgs" ]; then
+    git clone https://github.com/sd-robotics/ib2_msgs.git
 else
-    echo "ib2_interfaces directory already exists, skipping clone."
+    echo "ib2_msgs directory already exists, skipping clone."
 fi
 
 # Install Isaac Sim dependencies

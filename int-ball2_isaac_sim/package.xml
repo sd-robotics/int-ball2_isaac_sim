@@ -10,6 +10,9 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>isaac_ros_nitros</depend>
+  <depend>int-ball2_control</depend>
+  <depend>ib2_data_replay</depend>
+  <depend>ib2_nav</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
