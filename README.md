@@ -8,11 +8,6 @@
 ![GitHub fork](https://img.shields.io/github/forks/sd-robotics/int-ball2_isaac_sim)
 ![GitHub stars](https://img.shields.io/github/stars/sd-robotics/int-ball2_isaac_sim)
 
-<!--  [![Ubuntu22.04](https://img.shields.io/badge/Ubuntu-22.04-orange.svg)](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview) -->
-<!-- [![IsaacSim](https://img.shields.io/badge/IsaacSim-4.2.0-green.svg)](https://docs.omniverse.nvidia.com/isaacsim/latest/overview.html) -->
-<!-- [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://docs.python.org/3/whatsnew/3.10.html) -->
-<!-- [![ros2-humble installation](https://img.shields.io/badge/ROS2-Humble-blue.svg)](https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html) -->
-
 <p style="display: inline">
   <img src="https://img.shields.io/badge/-Ubuntu_22.04_LTS-555555.svg?style=flat&logo=ubuntu">  
   <img src="https://img.shields.io/badge/-Isaac_Sim 4.5.0-76B900.svg?style=flat&logo=nvidia&logoColor=white">
@@ -30,8 +25,7 @@
 
 3. [**Installation**](#installation)
     1. [Clone Repository](#clone-repository)
-    2. [Install Dependencies](#install-dependencies)
-    3. [Download Assets](#download-assets)
+    2. [Download Assets and Install Dependencies](#download-assets-and-install-dependencies)
 
 4. [**Usage**](#usage)
     1. [Build & Source](#build--source)
@@ -63,7 +57,7 @@ In order to use this project, you need to get ready the following environment.
 |  Package  |         Version         |
 | --------- | ----------------------- |
 |   Ubuntu  | 22.04 (Jammy Jellyfish) |
-| Isaac Sim | 4.2.0 (September 2024)  |
+| Isaac Sim |          4.5.0          |
 |    ROS    |     Humble Hawksbill    |
 |   Python  |          3.10 <=        |
 
@@ -80,24 +74,13 @@ Clone this package into your workspace.
 git clone https://github.com/sd-robotics/int-ball2_isaac_sim.git
 ```
 
-### Install Dependencies
-Move into your workspace.
-```bash
-cd ~/int-ball2_ws/
-```
-
-Install the dependencies.
-``` bash
-rosdep install --from-paths src --ignore-src -r -y
-```
-
-### Download Assets
+### Download Assets and Install Dependencies
 Move into this project folder.
 ```bash
 cd ~/int-ball2_ws/src/int-ball2_isaac_sim
 ```
 
-Download the assets (Int-Ball2, JEM, etc).
+Download the assets (Int-Ball2, JEM, etc) and install software dependencies.
 ```bash
 bash install_local.sh
 ```
@@ -195,7 +178,7 @@ Those ROSBags are publicily available in [HuggingFace](https://huggingface.co/da
 ```bash
 cd ~/int-ball2_ws/src/int-ball2_isaac_sim/int-ball2_data_replay/
 # Choose the ROSbag you want to download
-huggingface-cli download --repo-type dataset --local-dir ./ SpaceData/int-ball2_data_on_iss bags/rosbag_20250421111514.bag
+hf download --repo-type dataset --local-dir ./ SpaceData/int-ball2_data_on_iss bags/rosbag_20250421111514.bag
 ```
 2. Remember that the actual Int-Ball2 runs on ROS Melodic, then we need to convert the ROSBag so that is playable in ROS2 using [Rosbags](https://gitlab.com/ternaris/rosbags).
 ```bash

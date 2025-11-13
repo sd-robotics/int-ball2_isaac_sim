@@ -32,25 +32,25 @@ class IntBall2VelocityController(Node):
         twist = Twist()
 
         # Left stick controls linear velocity in X and Y
-        twist.linear.x = msg.axes[1] * self.MAX_LIN_VEL   # Left stick X
-        twist.linear.y = msg.axes[0] * self.MAX_LIN_VEL   # Left stick Y
+        twist.linear.x = joy_msg.axes[1] * self.MAX_LIN_VEL   # Left stick X
+        twist.linear.y = joy_msg.axes[0] * self.MAX_LIN_VEL   # Left stick Y
 
        # Right stick controls angular velocity in X and Y
-        twist.angular.x = msg.axes[4] * self.MAX_ANG_VEL  # Right stick X
-        twist.angular.y = msg.axes[3] * self.MAX_ANG_VEL  # Right stick Y
+        twist.angular.x = joy_msg.axes[4] * self.MAX_ANG_VEL  # Right stick X
+        twist.angular.y = joy_msg.axes[3] * self.MAX_ANG_VEL  # Right stick Y
 
         # L2 (Axis 2) and R2 (Axis 5) control force in Z
-        L2 = (1 - msg.axes[2]) / 2  # Convert from [-1, 1] to [0, 1]
-        R2 = (1 - msg.axes[5]) / 2  # Convert from [-1, 1] to [0, 1]
+        L2 = (1 - joy_msg.axes[2]) / 2  # Convert from [-1, 1] to [0, 1]
+        R2 = (1 - joy_msg.axes[5]) / 2  # Convert from [-1, 1] to [0, 1]
 
-        if msg.buttons[1]:
+        if joy_msg.buttons[1]:
             twist.linear.z  = (R2 - L2) * self.MAX_LIN_VEL # R2 increases, L2 decreases
-        elif msg.buttons[0]:
+        elif joy_msg.buttons[0]:
             twist.angular.z = (R2 - L2) * self.MAX_ANG_VEL # R2 increases, L2 decreases
 
         # Publish the twist message
         self.twist_publisher.publish(twist)
-        self.get_logger().info(
+        self.get_logger().debug(
             f"Published Twist: Linear({twist.linear.x}, {twist.linear.y}, {twist.linear.z}) | "
             f"Angular({twist.angular.x}, {twist.angular.y}, {twist.angular.z})"
         )
