@@ -48,6 +48,15 @@ else
     echo "ib2_msgs directory already exists, skipping clone."
 fi
 
+
+# Clone int-ball2 platform repository
+cd "$SRC_DIR"
+if [ ! -d "int-ball2_platform" ]; then
+    git clone https://github.com/sd-robotics/int-ball2_platform.git
+else
+    echo "int-ball2_platform directory already exists, skipping clone."
+fi
+
 # Install Isaac Sim dependencies
 wget -qO - https://isaac.download.nvidia.com/isaac-ros/repos.key | sudo apt-key add -
 grep -qxF "deb https://isaac.download.nvidia.com/isaac-ros/release-3 $(lsb_release -cs) release-3.0" /etc/apt/sources.list || \
